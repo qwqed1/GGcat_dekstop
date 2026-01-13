@@ -23,6 +23,9 @@ export function AppDataProvider({ children }) {
         img.onload = resolve
         img.onerror = resolve
         img.src = url
+        
+        // Force resolve after 3 seconds to avoid hanging
+        setTimeout(() => resolve(), 3000)
       })
     })
     await Promise.all(promises)
@@ -33,17 +36,40 @@ export function AppDataProvider({ children }) {
       setLoading(true)
       setProgress(10)
 
-      const ratesResponse = await fetch(import.meta.env.VITE_API_URL + '/rates')
-      const ratesData = await ratesResponse.json()
-      setRates(ratesData)
+      // Timeout for rates fetch
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10s
+
+      try {
+        const ratesResponse = await fetch(import.meta.env.VITE_API_URL + '/rates', {
+          signal: controller.signal
+        })
+        clearTimeout(timeoutId)
+        if (ratesResponse.ok) {
+           const ratesData = await ratesResponse.json()
+           setRates(ratesData)
+        }
+      } catch (e) {
+        console.warn('Quotes load failed or timed out', e)
+        // Proceed anyway
+      }
+      
       setProgress(30)
 
-      const casesData = await getCases()
-      setCases(casesData)
+      let casesData = []
+      try {
+        casesData = await getCases()
+        setCases(casesData)
+      } catch (e) {
+         console.warn('Cases load failed', e)
+      }
       setProgress(50)
 
-      const caseImages = casesData.map((c) => c.main_image).filter(Boolean)
-      await preloadImages(caseImages)
+      // If cases loaded, preload their images
+      if (casesData && casesData.length > 0) {
+          const caseImages = casesData.map((c) => c.main_image).filter(Boolean)
+          await preloadImages(caseImages)
+      }
       setProgress(70)
 
       const staticImages = [
@@ -72,7 +98,7 @@ export function AppDataProvider({ children }) {
       setError(err.message)
       setLoading(false)
     }
-  }, [preloadImages])
+  }, [preloadImages, cases])
 
   return (
     <AppDataContext.Provider
