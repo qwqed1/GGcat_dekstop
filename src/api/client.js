@@ -1,7 +1,7 @@
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL = import.meta.env.VITE_API_URL || 'https://ggcat.org'
 
-if (!API_URL) {
-  console.error('❌ VITE_API_URL is not defined! Check your environment variables.')
+if (!import.meta.env.VITE_API_URL) {
+  console.warn('⚠️ VITE_API_URL not set, using default:', API_URL)
 }
 
 export async function apiFetch(path, options = {}) {
