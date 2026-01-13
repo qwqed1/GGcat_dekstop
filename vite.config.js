@@ -2,9 +2,11 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
+const isElectron = process.env.ELECTRON === 'true'
+
 export default defineConfig({
   plugins: [react()],
-  base: './',
+  base: isElectron ? './' : '/',
   server: {
     port: 5180,
     strictPort: false,
@@ -12,7 +14,6 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    // Для Electron нужны относительные пути
     assetsDir: 'assets',
   },
 })
