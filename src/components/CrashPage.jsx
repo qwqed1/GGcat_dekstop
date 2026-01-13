@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef, useMemo, memo } from 'react'
 import { Player } from '@lottiefiles/react-lottie-player'
 import './CrashPage.css'
+import PageLayout from './PageLayout'
 import Header from './Header'
 import Navigation from './Navigation'
 import BetModal from './BetModal'
@@ -511,11 +512,8 @@ useEffect(() => {
   }, [gameState, settings?.vibrationEnabled])
 
   return (
-    <div className="app crash-page">
-      
-      <MemoHeader />
-      
-      <main className="main-content crash-content">
+    <PageLayout activePage="crash" className="crash-page">
+      <div className="crash-content">
         {/* Зона игры */}
         <div className={`crash-game-area ${gameState === 'countdown' ? 'crash-countdown' : ''} ${gameState === 'postflight' ? 'crash-postflight' : ''} ${gameState === 'postflight-done' ? 'crash-postflight-done' : ''} ${gameState !== 'countdown' ? 'crash-no-rays' : ''}`}>
           <div
@@ -723,10 +721,6 @@ useEffect(() => {
   ))}
 </div>
 
-      </main>
-      
-      <MemoNavigation activePage="crash" />
-
       {/* Модальное окно выигрыша */}
       {winModalOpen && winData && (
         <div className="wheel-result-overlay" onClick={() => setWinModalOpen(false)}>
@@ -786,7 +780,8 @@ useEffect(() => {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </PageLayout>
   )
 }
 

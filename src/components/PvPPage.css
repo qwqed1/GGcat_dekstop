@@ -3,7 +3,14 @@
 }
 
 .pvp-content {
-  padding: 0 16px 90px;
+  padding: 24px;
+  padding-bottom: 90px;
+}
+
+@media (max-width: 768px) {
+  .pvp-content {
+    padding: 0 16px 90px;
+  }
 }
 
 /* Зона игры */
@@ -11,8 +18,8 @@
   background: var(--page-bg);
   border-radius: 0;
   padding: 16px;
-  margin: 0 -16px 12px;
-  width: calc(100% + 32px);
+  margin: 0 -24px 12px;
+  width: calc(100% + 48px);
   min-height: 280px;
   display: flex;
   flex-direction: column;
@@ -20,6 +27,13 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .pvp-game-area {
+    margin: 0 -16px 12px;
+    width: calc(100% + 32px);
+  }
 }
 .bet-button.disabled {
   opacity: 0.5;
@@ -102,8 +116,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 520px;
-  height: 520px;
+  width: 150%;
+  aspect-ratio: 1;
   background: repeating-conic-gradient(
     from 90deg,
     #260057 0deg 7.5deg,

@@ -5,7 +5,12 @@ const WS_URL = `${WS_BASE_URL}/ws/crash?token=supersecret`;
 const RECONNECT_DELAY = 2000; // 2 секунды между попытками reconnect
 const HEARTBEAT_INTERVAL = 30000; // ping каждые 30 секунд
 
-export function useCrashSocket(onMessage: (msg: any) => void) {
+interface UseCrashSocketOptions {
+  enabled?: boolean;
+}
+
+export function useCrashSocket(onMessage: (msg: any) => void, options: UseCrashSocketOptions = {}) {
+  const { enabled = true } = options;
   const wsRef = useRef<WebSocket | null>(null);
   const [connected, setConnected] = useState(false);
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -89,6 +94,11 @@ export function useCrashSocket(onMessage: (msg: any) => void) {
   }, [startHeartbeat, clearTimers]);
 
   useEffect(() => {
+    // Не подключаемся если enabled = false
+    if (!enabled) {
+      return;
+    }
+    
     isUnmountedRef.current = false;
     connect();
 
@@ -100,7 +110,7 @@ export function useCrashSocket(onMessage: (msg: any) => void) {
       }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [enabled]);
 
   const send = useCallback((data: any) => {
     if (wsRef.current?.readyState === WebSocket.OPEN) {

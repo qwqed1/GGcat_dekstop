@@ -25,15 +25,26 @@ export const translations = {
       bonusAccount: 'Бонусный счет',
       account: 'Счет',
       bonusActivated: 'Бонус активирован!',
+      deposit: 'Пополнить',
+      withdraw: 'Вывести',
+      inventory: 'Инвентарь',
+    },
+
+    // Sidebar
+    sidebar: {
+      games: 'Игры',
     },
 
     // Navigation
     nav: {
+      home: 'Главная',
       cases: 'Кейсы',
       crash: 'Ракетка',
       roulette: 'Рулетка',
       pvp: 'PvP',
       upgrade: 'Апгрейд',
+      partner: 'Партнёры',
+      top20: 'Топ 20',
     },
 
 
@@ -80,6 +91,19 @@ export const translations = {
       paid: 'Платные',
       free: 'Бесплатные',
       loadingCases: 'Загрузка кейсов…',
+      howItWorks: 'Как работают Кейсы',
+      step1Title: 'Выберите кейс',
+      step1Desc: 'Все кейсы содержат Telegram подарки и звезды. Чем дороже кейс — тем круче призы внутри!',
+      step2Title: 'Откройте кейс',
+      step2Desc: 'Нажмите кнопку «Открыть» и смотрите анимацию. Ваш приз сразу попадёт в инвентарь.',
+      step3Title: 'Выведите подарок',
+      step3Desc: 'Выводите TG подарки на свой Telegram аккаунт мгновенно. Или продайте за баланс и откройте новые кейсы.',
+      step4Title: 'Что делать дальше?',
+      step4Desc: 'Копите редкие подарки для апгрейда на более ценные. Или используйте их в режиме мины для увеличения выигрыша.',
+      usefulTips: 'Полезные советы',
+      tip1: 'Открывайте более дорогие кейсы — там шанс получить редкие подарки выше!',
+      tip2: 'Не хотите выводить? Продайте подарок за баланс и откройте новый кейс.',
+      tip3: 'Копите одинаковые подарки — их можно использовать вместе в апгрейде.',
     },
 
     // Case Modal
@@ -271,6 +295,7 @@ export const translations = {
 
     // Home Page
     home: {
+      games: 'Игры',
       roulette: 'КЕЙСЫ',
       crash: 'РАКЕТКА',
       pvp: 'PvP',
@@ -316,15 +341,26 @@ export const translations = {
       bonusAccount: 'Bonus Account',
       account: 'Account',
       bonusActivated: 'Bonus activated!',
+      deposit: 'Deposit',
+      withdraw: 'Withdraw',
+      inventory: 'Inventory',
+    },
+
+    // Sidebar
+    sidebar: {
+      games: 'Games',
     },
 
     // Navigation
     nav: {
+      home: 'Home',
       cases: 'Cases',
       crash: 'Crash',
       roulette: 'Roulette',
       pvp: 'PvP',
       upgrade: 'Upgrade',
+      partner: 'Partners',
+      top20: 'Top 20',
     },
 
     errors: {
@@ -370,6 +406,19 @@ export const translations = {
       paid: 'Paid',
       free: 'Free',
       loadingCases: 'Loading cases…',
+      howItWorks: 'How Cases Work',
+      step1Title: 'Choose a case',
+      step1Desc: 'All cases contain Telegram gifts and stars. The more expensive the case — the cooler the prizes inside!',
+      step2Title: 'Open the case',
+      step2Desc: 'Click the "Open" button and watch the animation. Your prize will go straight to your inventory.',
+      step3Title: 'Withdraw the gift',
+      step3Desc: 'Withdraw TG gifts to your Telegram account instantly. Or sell for balance and open new cases.',
+      step4Title: 'What to do next?',
+      step4Desc: 'Collect rare gifts to upgrade to more valuable ones. Or use them in mine mode to increase your winnings.',
+      usefulTips: 'Useful Tips',
+      tip1: 'Open more expensive cases — the chance to get rare gifts is higher!',
+      tip2: 'Don\'t want to withdraw? Sell the gift for balance and open a new case.',
+      tip3: 'Collect identical gifts — they can be used together in upgrades.',
     },
 
     // Case Modal
@@ -561,6 +610,7 @@ export const translations = {
 
     // Home Page
     home: {
+      games: 'Games',
       roulette: 'CASES',
       crash: 'ROCKET',
       pvp: 'PvP',

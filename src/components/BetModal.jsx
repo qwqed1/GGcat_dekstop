@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react'
+import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import './BetModal.css'
 import { useCurrency } from '../context/CurrencyContext'
 import { useLanguage } from '../context/LanguageContext'
@@ -54,7 +54,9 @@ function BetModal({
   }, [user?.balance, isNoDecimalCurrency, minBetInCurrency, selectedCurrency?.rate, LAST_BET_KEY])
   
   const [betAmount, setBetAmount] = useState(defaultBet)
-  const { send, connected } = useCrashSocket(() => {})
+  
+  // Используем useCrashSocket только для crash игры
+  const { send, connected } = useCrashSocket(() => {}, { enabled: game === 'crash' })
   
   useEffect(() => {
     localStorage.setItem(LAST_BET_KEY, betAmount)
@@ -475,6 +477,9 @@ function BetModal({
         className="bet-modal-content"
         ref={contentRef}
       >
+        {/* Кнопка закрытия для десктопа */}
+        <button className="modal-close-btn" onClick={onClose} aria-label="Close" />
+        
         {/* Ручка для свайпа */}
         <div 
           className="bet-modal-handle"

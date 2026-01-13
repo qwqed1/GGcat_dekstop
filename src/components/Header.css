@@ -16,13 +16,70 @@
     margin-right: -50vw;
     width: 100vw;
     padding: 8px 16px;
-    padding-top: 60px;
   }
 }
-.header {
-  padding-top: 112px;
+
+
+/* Header Action Buttons */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  margin-right: 16px;
 }
 
+.header-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.header-btn-icon {
+  font-size: 14px;
+}
+
+.header-btn-deposit {
+  background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+  color: #fff;
+}
+
+.header-btn-deposit:hover {
+  background: linear-gradient(135deg, #9D6FFF 0%, #7C3AED 100%);
+}
+
+.header-btn-withdraw {
+  background: linear-gradient(135deg, #6D28D9 0%, #4C1D95 100%);
+  color: #fff;
+}
+
+.header-btn-withdraw:hover {
+  background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+}
+
+.header-btn-inventory {
+  background: rgba(139, 92, 246, 0.15);
+  color: #A78BFA;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.header-btn-inventory:hover {
+  background: rgba(139, 92, 246, 0.25);
+  color: #C4B5FD;
+}
+
+@media (max-width: 768px) {
+  .header-actions {
+    display: none;
+  }
+}
 
 .header-right {
   display: flex;

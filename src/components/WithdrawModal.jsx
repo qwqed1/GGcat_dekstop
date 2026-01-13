@@ -165,6 +165,9 @@ function WithdrawModal({ isOpen, onClose }) {
         className="withdraw-modal-content"
         ref={contentRef}
       >
+        {/* Кнопка закрытия для десктопа */}
+        <button className="modal-close-btn" onClick={onClose} aria-label="Close" />
+        
         <div 
           className="withdraw-modal-handle" 
           onMouseDown={handleDragStart}

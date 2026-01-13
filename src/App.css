@@ -31,7 +31,34 @@
 }
 
 .games-section {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 0 24px;
+}
+
+@media (max-width: 1200px) {
+  .games-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .games-section {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+}
+
+.home-content {
+  padding: 24px;
+}
+
+.home-content h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 20px;
+  padding-left: 4px;
+  border-left: 4px solid #8B5CF6;
 }

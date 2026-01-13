@@ -1,12 +1,15 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useEffect } from 'react'
 import './App.css'
+import './components/ModalDesktop.css'
 
 import Header from './components/Header'
+import Sidebar from './components/Sidebar'
 import Banner from './components/Banner'
 import TaskList from './components/TaskList'
 import GameCard from './components/GameCard'
 import Navigation from './components/Navigation'
+import PageLayout from './components/PageLayout'
 import ProfilePage from './components/ProfilePage'
 import CrashPage from './components/CrashPage'
 import CasesPage from './components/CasesPage'
@@ -31,13 +34,12 @@ function HomePage() {
   const { t } = useLanguage()
   const online = useOnlineWs()
   return (
-    <div className="app home-page">
-      <Header />
-
-      <main className="main-content">
+    <PageLayout activePage="home">
+      <div className="home-content">
         <Banner />
         <TaskList />
 
+        <h2>{t('home.games')}</h2>
         <div className="games-section">
           <GameCard title={t('home.roulette')} online={online[1]} />
           <GameCard title={t('home.crash')}    online={online[2]} />
@@ -45,10 +47,8 @@ function HomePage() {
           <GameCard title={t('home.pvp')}      online={online[4]} />
           <GameCard title={t('home.upgrade')}  online={online[4]} />
         </div>
-      </main>
-
-      <Navigation />
-    </div>
+      </div>
+    </PageLayout>
   )
 }
 
@@ -98,60 +98,14 @@ function AppContent() {
 function App() {
   const { initUser, loading } = useUser()
 
+  // Инициализация пользователя - сразу для сайта, без ожидания Telegram
   useEffect(() => {
-    initTelegram()
-  }, [])
-  useEffect(() => {
-    const preventZoom = (e) => {
-      // Ctrl + колесо
-      if (e.ctrlKey) {
-        e.preventDefault()
-      }
-    }
-  
-    const preventKeyZoom = (e) => {
-      // Ctrl + + / - / =
-      if (
-        e.ctrlKey &&
-        (e.key === '+' || e.key === '-' || e.key === '=' || e.key === '0')
-      ) {
-        e.preventDefault()
-      }
-    }
-  
-    window.addEventListener('wheel', preventZoom, { passive: false })
-    window.addEventListener('keydown', preventKeyZoom)
-  
-    return () => {
-      window.removeEventListener('wheel', preventZoom)
-      window.removeEventListener('keydown', preventKeyZoom)
-    }
-  }, [])
-  
-  useEffect(() => {
+    // Проверяем есть ли Telegram WebApp
     const tg = window.Telegram?.WebApp
-    if (!tg) return
-  
-    tg.ready()
-  
-    // 🔥 ВСЕГДА пытаемся раскрыть
-    tg.expand()
-  
-    // 🔁 повтор при изменении viewport
-    tg.onEvent('viewportChanged', () => {
-      tg.expand()
-    })
-  
-    // 🔁 повтор при возврате в фокус
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) {
-        tg.expand()
-      }
-    })
-  
-    if (tg.initDataUnsafe?.user) {
+    
+    if (tg?.initDataUnsafe?.user) {
+      // Если есть Telegram - используем его данные
       const tgUser = tg.initDataUnsafe.user
-  
       initUser({
         tg_id: String(tgUser.id),
         username: tgUser.username || `tg_${tgUser.id}`,
@@ -159,36 +113,37 @@ function App() {
         photo_url: tgUser.photo_url || null,
       })
     } else {
+      // Для сайта - демо пользователь
       initUser({
-        tg_id: 'local',
-        username: 'localuser',
-        firstname: 'Guest',
+        tg_id: 'demo_user',
+        username: 'demo',
+        firstname: 'Demo User',
         photo_url: null,
       })
     }
-  }, [])
-  
+  }, [initUser])
 
   // пока идёт инициализация пользователя
   if (loading) {
-    return <Preloader progress={0} />
+    return <Preloader progress={50} />
   }
 
-
     return (
-      <LanguageProvider>
-        <FreeSpinProvider>
-          <CurrencyProvider>
-            <AppDataProvider>
-              <LiveFeedProvider>
-                <CrashProvider>
-                  <AppContent />
-                </CrashProvider>
-              </LiveFeedProvider>
-            </AppDataProvider>
-          </CurrencyProvider>
-        </FreeSpinProvider>
-      </LanguageProvider>
+      <>
+        <LanguageProvider>
+          <FreeSpinProvider>
+            <CurrencyProvider>
+              <AppDataProvider>
+                <LiveFeedProvider>
+                  <CrashProvider>
+                    <AppContent />
+                  </CrashProvider>
+                </LiveFeedProvider>
+              </AppDataProvider>
+            </CurrencyProvider>
+          </FreeSpinProvider>
+        </LanguageProvider>
+      </>
     )
   }
   

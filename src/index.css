@@ -48,8 +48,8 @@ input, textarea {
 body {
   background-color: var(--page-bg);
   min-height: 100vh;
-  max-width: 430px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
 }
 
 #root {

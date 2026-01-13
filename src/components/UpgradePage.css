@@ -3,7 +3,14 @@
 }
 
 .upgrade-content {
-  padding: 0 16px 90px;
+  padding: 24px;
+  padding-bottom: 90px;
+}
+
+@media (max-width: 768px) {
+  .upgrade-content {
+    padding: 0 16px 90px;
+  }
 }
 
 /* Пустой инвентарь */
@@ -31,8 +38,8 @@
 .upgrade-game-area {
   background: var(--page-bg);
   padding: 46px 15px 20px;
-  margin: 0 -16px 20px;
-  width: calc(100% + 32px);
+  margin: 0 -24px 20px;
+  width: calc(100% + 48px);
   min-height: 320px;
   display: flex;
   flex-direction: column;
@@ -40,6 +47,13 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .upgrade-game-area {
+    margin: 0 -16px 20px;
+    width: calc(100% + 32px);
+  }
 }
 
 .upgrade-game-area-fade {
@@ -61,8 +75,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 780px;
-  height: 780px;
+  width: 150%;
+  aspect-ratio: 1;
   background: repeating-conic-gradient(
     from 90deg,
     #260057 0deg 7.5deg,
@@ -466,8 +480,20 @@
 
 .upgrade-gifts-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+}
+
+@media (max-width: 1200px) {
+  .upgrade-gifts-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .upgrade-gifts-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .upgrade-gift-card {

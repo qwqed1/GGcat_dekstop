@@ -2,10 +2,12 @@
   border-radius: 16px;
   margin-bottom: 16px;
   overflow: hidden;
+  max-height: 220px;
 }
 
 .banner-image {
   display: block;
   width: 100%;
   height: auto;
+  object-fit: cover;
 }

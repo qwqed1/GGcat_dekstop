@@ -252,6 +252,9 @@ if (loading || !user) {
         onTouchMove={handleDragMove}
         onTouchEnd={handleDragEnd}
       >
+        {/* Кнопка закрытия (крестик) для десктопа */}
+        <button className="modal-close-btn" onClick={onClose} aria-label="Close" />
+        
         {/* Ручка для свайпа */}
         <div 
           className="deposit-modal-handle"

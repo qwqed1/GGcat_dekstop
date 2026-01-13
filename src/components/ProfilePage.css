@@ -1,7 +1,12 @@
 .profile-page {
   min-height: 100vh;
   background-color: var(--page-bg);
-  padding: 0 16px;
+  width: 100%;
+}
+
+.profile-content {
+  width: 100%;
+  padding: 0 24px;
   padding-bottom: 100px;
 }
 
@@ -352,6 +357,8 @@
 .bonus-banner-img {
   width: 100%;
   height: auto;
+  max-height: 200px;
+  object-fit: contain;
   border-radius: 16px;
   margin-bottom: 12px;
   cursor: pointer;
@@ -367,6 +374,8 @@
 .partner-program-img {
   width: 100%;
   height: auto;
+  max-height: 160px;
+  object-fit: contain;
   border-radius: 16px;
   margin-bottom: 16px;
   cursor: pointer;

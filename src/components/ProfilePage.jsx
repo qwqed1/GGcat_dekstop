@@ -1,6 +1,7 @@
 import './ProfilePage.css'
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
+import PageLayout from './PageLayout'
 import Navigation from './Navigation'
 import WithdrawModal from './WithdrawModal'
 import InventoryModal from './InventoryModal'
@@ -18,16 +19,29 @@ import { canWithdraw } from '../api/withdraw'
 
 function ProfilePage() {
   const navigate = useNavigate()
+  const location = useLocation()
   const { 
     currencyOptions,
     selectedCurrency,
     setSelectedCurrency,
     hasFreeSpins,
     setHasFreeSpins,
-    formatAmount, // 👈 ДОБАВЬ
+    formatAmount,
   } = useCurrency()
   
   const [top1Balance, setTop1Balance] = useState(0)
+  
+  // Скролл к секции инвентаря при переходе с хешем #inventory
+  useEffect(() => {
+    if (location.hash === '#inventory') {
+      setTimeout(() => {
+        const inventorySection = document.getElementById('inventory')
+        if (inventorySection) {
+          inventorySection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 100)
+    }
+  }, [location.hash])
   
   const { user, settings, updateSettings } = useUser()
   const { t, language, changeLanguage, languages, currentLanguage } = useLanguage()
@@ -170,8 +184,8 @@ function ProfilePage() {
     loadInventory()
   }, [inventory])
   
-// 👉 только первые 4 подарка для превью
-const inventoryPreview = inventoryDrops.slice(0, 4)
+// 👉 показываем больше подарков для превью на десктопе
+const inventoryPreview = inventoryDrops.slice(0, 12)
 
   const displayName = firstname || username || t('common.guest')
   const avatar =
@@ -201,8 +215,8 @@ const inventoryPreview = inventoryDrops.slice(0, 4)
     item?.icon || item?.image || item?.url || item?.url_image || '/image/mdi_gift (2).svg'
 
   return (
-    <div className="profile-page">
-      <Header />
+    <PageLayout activePage="profile" className="profile-page">
+      <div className="profile-content">
 
       {/* ===== USER CARD ===== */}
       <div className="profile-user-card">
@@ -300,7 +314,7 @@ const inventoryPreview = inventoryDrops.slice(0, 4)
       />
 
       {/* ===== INVENTORY ===== */}
-      <div className="inventory-section">
+      <div className="inventory-section" id="inventory">
         <div className="inventory-header">
           <span className="inventory-title">
             {t('profile.inventory')} ({totalInventoryCount})
@@ -445,8 +459,8 @@ const inventoryPreview = inventoryDrops.slice(0, 4)
   </div>
 )}
 
-      <Navigation />
-    </div>
+      </div>
+    </PageLayout>
   )
 }
 

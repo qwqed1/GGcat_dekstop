@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef, memo } from 'react'
 import './UpgradePage.css'
 import './WheelPage.css'
+import PageLayout from './PageLayout'
 import Header from './Header'
 import Navigation from './Navigation'
 import { useUser } from '../context/UserContext'
@@ -400,10 +401,8 @@ function UpgradePage() {
   const currencyIcon = selectedCurrency?.icon || '/image/Coin-Icon.svg'
 
   return (
-    <div className="app upgrade-page">
-      <MemoHeader />
-      
-      <main className="main-content upgrade-content">
+    <PageLayout activePage="upgrade" className="upgrade-page">
+      <div className="upgrade-content">
         {/* Основная зона апгрейда */}
         <div className={`upgrade-game-area ${gameState}`}>
           <div className="game-cosmic-background" aria-hidden="true" />
@@ -605,10 +604,8 @@ function UpgradePage() {
 
           </div>
         </div>
-      </main>
-      
-      <MemoNavigation activePage="upgrade" />
-    </div>
+      </div>
+    </PageLayout>
   )
 }
 

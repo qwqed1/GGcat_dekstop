@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './CasesPage.css'
-
+import PageLayout from './PageLayout'
 import Header from './Header'
 import Navigation from './Navigation'
 import CaseModal from './CaseModal'
@@ -28,6 +28,7 @@ function CasesPage() {
   const [activeTab, setActiveTab] = useState('paid')
   const [selectedCase, setSelectedCase] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isHowItWorksOpen, setIsHowItWorksOpen] = useState(false)
   const { liveDrops } = useLiveFeed()
   
   
@@ -50,10 +51,8 @@ function CasesPage() {
   }
 
   return (
-    <div className="cases-page">
-      <Header />
-
-      <main className="cases-main">
+    <PageLayout activePage="cases" className="cases-page">
+      <div className="cases-content">
         {/* ===== LIVE FEED ===== */}
         <div className="live-feed-bar">
           <div className="live-indicator">
@@ -83,6 +82,86 @@ function CasesPage() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+
+        {/* ===== HOW CASES WORK ===== */}
+        <div className={`how-cases-work ${isHowItWorksOpen ? 'expanded' : 'collapsed'}`}>
+          <div className="how-cases-header" onClick={() => setIsHowItWorksOpen(!isHowItWorksOpen)}>
+            <svg className="how-cases-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+              <path d="M12 7v1m0 8v1m0-5.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+            <span>{t('cases.howItWorks')}</span>
+            <svg className="how-cases-chevron" viewBox="0 0 24 24" fill="none">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+
+          <div className="how-cases-content">
+            <div className="how-cases-steps">
+            <div className="how-case-step">
+              <div className="step-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" className="step-icon">
+                  <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" strokeWidth="2"/>
+                  <path d="M8 12h8M12 8v8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+                <span className="step-number">1</span>
+              </div>
+              <h4>{t('cases.step1Title')}</h4>
+              <p>{t('cases.step1Desc')}</p>
+            </div>
+
+            <div className="how-case-step">
+              <div className="step-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" className="step-icon">
+                  <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="2"/>
+                  <path d="M7 15h4M7 11h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+                <span className="step-number">2</span>
+              </div>
+              <h4>{t('cases.step2Title')}</h4>
+              <p>{t('cases.step2Desc')}</p>
+            </div>
+
+            <div className="how-case-step">
+              <div className="step-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" className="step-icon">
+                  <path d="M12 3L20 7.5V16.5L12 21L4 16.5V7.5L12 3Z" stroke="currentColor" strokeWidth="2"/>
+                  <path d="M12 12L12 21M12 12L4 7.5M12 12L20 7.5" stroke="currentColor" strokeWidth="2"/>
+                </svg>
+                <span className="step-number">3</span>
+              </div>
+              <h4>{t('cases.step3Title')}</h4>
+              <p>{t('cases.step3Desc')}</p>
+            </div>
+
+            <div className="how-case-step">
+              <div className="step-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" className="step-icon">
+                  <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="2"/>
+                  <path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+                <span className="step-number">4</span>
+              </div>
+              <h4>{t('cases.step4Title')}</h4>
+              <p>{t('cases.step4Desc')}</p>
+            </div>
+          </div>
+
+          <div className="useful-tips">
+            <div className="useful-tips-header">
+              <svg viewBox="0 0 24 24" fill="none" className="tips-icon">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span>{t('cases.usefulTips')}</span>
+            </div>
+            <ul className="tips-list">
+              <li>{t('cases.tip1')}</li>
+              <li>{t('cases.tip2')}</li>
+              <li>{t('cases.tip3')}</li>
+            </ul>
+          </div>
           </div>
         </div>
 
@@ -140,9 +219,7 @@ function CasesPage() {
             </div>
           ))}
         </div>
-      </main>
-
-      <Navigation activePage="cases" />
+      </div>
 
       <CaseModal
         isOpen={isModalOpen}
@@ -150,7 +227,7 @@ function CasesPage() {
         caseData={selectedCase}
         isPaid={Number(selectedCase?.price) > 0}
       />
-    </div>
+    </PageLayout>
   )
 }
 

@@ -5,6 +5,8 @@ import { useCurrency } from '../context/CurrencyContext'
 import { useLanguage } from '../context/LanguageContext'
 import { useUser } from '../context/UserContext'
 import DepositModal from './DepositModal'
+import WithdrawModal from './WithdrawModal'
+import InventoryModal from './InventoryModal'
 
 const accountTypes = [
   { id: 'usdt', name: 'USDT TON', icon: '💎', amount: '1.22' },
@@ -39,6 +41,8 @@ const {
   const [selectedAccount, setSelectedAccount] = useState(accountTypes[0])
   const [selectedGameCurrency, setSelectedGameCurrency] = useState(gameCurrencies[0])
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false)
+  const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false)
+  const [isInventoryModalOpen, setIsInventoryModalOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const visibleCurrencies = currencyOptions.filter((currency) => currency.id !== selectedCurrency.id)
@@ -53,6 +57,22 @@ const {
       <Link className="logo" to="/" aria-label="На главную">
         <img src="/image/Logo.svg" alt="GG Cat logo" />
       </Link>
+
+      {/* Action Buttons */}
+      <div className="header-actions">
+        <button className="header-btn header-btn-deposit" onClick={() => setIsDepositModalOpen(true)}>
+          <span className="header-btn-icon">+</span>
+          <span className="header-btn-text">{t('header.deposit')}</span>
+        </button>
+        <button className="header-btn header-btn-withdraw" onClick={() => setIsWithdrawModalOpen(true)}>
+          <span className="header-btn-icon">↑</span>
+          <span className="header-btn-text">{t('header.withdraw')}</span>
+        </button>
+        <button className="header-btn header-btn-inventory" onClick={() => navigate('/profile#inventory')}>
+          <span className="header-btn-icon">📦</span>
+          <span className="header-btn-text">{t('header.inventory')}</span>
+        </button>
+      </div>
       
       <div className="header-right">
         <div className="balance-container">
@@ -221,6 +241,16 @@ const {
 <DepositModal
   isOpen={isDepositModalOpen}
   onClose={() => setIsDepositModalOpen(false)}
+/>
+
+<WithdrawModal
+  isOpen={isWithdrawModalOpen}
+  onClose={() => setIsWithdrawModalOpen(false)}
+/>
+
+<InventoryModal
+  isOpen={isInventoryModalOpen}
+  onClose={() => setIsInventoryModalOpen(false)}
 />
 
     </header>

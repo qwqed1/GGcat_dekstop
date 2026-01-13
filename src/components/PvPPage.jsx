@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, memo } from 'react'
 import './PvPPage.css'
 import './WheelPage.css'
+import PageLayout from './PageLayout'
 import Header from './Header'
 import Navigation from './Navigation'
 import BetModal from './BetModal'
@@ -98,7 +99,7 @@ function PvPPage() {
       setGameState("fighting")
       setBattleResult(null)
     
-      // 👇 бот
+      // бот
       setOpponentBot({
         id: data.bot.id,
         nickname: data.bot.nickname,
@@ -114,7 +115,7 @@ function PvPPage() {
             : "draw",
       })
     
-      // 👇 ставка игрока - сохраняем подарок если был подарок
+      // ставка игрока - сохраняем подарок если был подарок
       setMyBet(prev => {
         if (prev?.type === "gift") {
           return prev
@@ -350,10 +351,8 @@ function PvPPage() {
   
 
   return (
-    <div className="app pvp-page">
-      <MemoHeader />
-      
-      <main className="main-content pvp-content">
+    <PageLayout activePage="pvp" className="pvp-page">
+      <div className="pvp-content">
         {/* Зона игры */}
         <div className={`pvp-game-area ${gameState === 'countdown' ? 'pvp-countdown' : ''} ${gameState === 'result' ? 'pvp-result' : ''}`}>
           <div className="game-cosmic-background" aria-hidden="true" />
@@ -719,10 +718,8 @@ function PvPPage() {
             </div>
           ))}
         </div>
-      </main>
-      
-      <MemoNavigation activePage="pvp" />
-    </div>
+      </div>
+    </PageLayout>
   )
 }
 

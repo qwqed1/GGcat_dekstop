@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback, memo } from 'react'
 import { useCurrency } from '../context/CurrencyContext'
 import { useLanguage } from '../context/LanguageContext'
 import './WheelPage.css'
+import PageLayout from './PageLayout'
 import Header from './Header'
 import Navigation from './Navigation'
 import { Player } from '@lottiefiles/react-lottie-player'
@@ -14,10 +15,65 @@ import { useUser } from '../context/UserContext'
 import { vibrate, VIBRATION_PATTERNS } from '../utils/vibration'
 import { useFreeSpin } from '../context/FreeSpinContext'
 
-// Wheel prizes - 10 segments with case card images and one Lottie animation
-
-
 const NUM_LIGHTS = 32 // Number of lights around the wheel
+
+// Мемоизированный компонент для сегмента колеса
+const WheelSegmentContent = memo(({ prize, angle, currencyIcon, formatAmount }) => (
+  <div
+    className="wheel-segment-content"
+    style={{ '--segment-angle': `${angle}deg` }}
+  >
+    <span className="wheel-segment-price">
+      <img src={currencyIcon} alt="currency" className="wheel-segment-coin" />
+      {formatAmount(prize.basePrice)}
+    </span>
+    {prize.contentType === 'animation' ? (
+      <Player
+        autoplay
+        loop
+        src={prize.animation}
+        className="wheel-segment-animation"
+      />
+    ) : (
+      <img src={prize.image} alt="prize" className="wheel-segment-image" loading="lazy" />
+    )}
+  </div>
+))
+
+// Конвертация URL в webp формат
+const getWebpUrl = (url) => {
+  if (!url) return url
+  if (url.endsWith('.webp')) return url
+  return url.replace(/\.(png|jpg|jpeg|gif)$/i, '.webp')
+}
+
+// Мемоизированный компонент для карточки приза в списке
+const PrizeCard = memo(({ drop, currencyIcon, formatAmount }) => {
+  const imageUrl = drop.icon || '/image/mdi_gift.svg'
+  
+  return (
+    <div className="prize-card">
+      <div className="prize-image">
+        <img 
+          src={getWebpUrl(imageUrl)} 
+          alt={drop.name} 
+          className="prize-img"
+          loading="lazy"
+          decoding="async"
+          onError={(e) => { 
+            if (e.target.src !== imageUrl) {
+              e.target.src = imageUrl 
+            }
+          }}
+        />
+      </div>
+      <span className="prize-price-badge">
+        <img src={currencyIcon} alt="currency" className="prize-price-coin" />
+        {formatAmount(drop.price)}
+      </span>
+    </div>
+  )
+})
 
 function WheelPage() {
   const { selectedCurrency, hasFreeSpins, formatAmount, formatWinAmount } = useCurrency()
@@ -26,7 +82,6 @@ function WheelPage() {
   const [isSpinning, setIsSpinning] = useState(false)
   const [showResult, setShowResult] = useState(false)
   const [wonPrize, setWonPrize] = useState(null)
-  const [lightPhase, setLightPhase] = useState(0)
   const [showCrashModal, setShowCrashModal] = useState(false)
   const [showPrizesModal, setShowPrizesModal] = useState(false)
   const [expandedCategory, setExpandedCategory] = useState(null) // Для аккордеона
@@ -161,12 +216,36 @@ function WheelPage() {
     return prizes
   }
 
-  const handleRefresh = () => {
-    if (isSpinning || !allDrops.length) return
-    const newPrizes = buildInitialWheel()
-    setWheelPrizes(newPrizes)
-    setRotation(0) // Сбросить позицию колеса
-  }
+  const handleRefresh = useCallback(async () => {
+    if (isSpinning) return
+    
+    try {
+      // Перезагружаем дропы с сервера
+      const drops = await getAllDrops()
+      setAllDrops(drops)
+      
+      // Строим новое колесо из свежих данных
+      if (drops.length) {
+        const TOTAL = 10
+        const prizes = []
+        while (prizes.length < TOTAL) {
+          const r = drops[Math.floor(Math.random() * drops.length)]
+          prizes.push({
+            id: Math.random(),
+            basePrice: r.price,
+            image: r.icon,
+            animation: r.lottie_anim,
+            contentType: r.lottie_anim ? 'animation' : 'image',
+            type: r.rarity === 'epic' ? 'purple' : 'blue',
+          })
+        }
+        setWheelPrizes(prizes)
+        setRotation(0)
+      }
+    } catch (e) {
+      console.error('Failed to refresh drops', e)
+    }
+  }, [isSpinning])
 
   useEffect(() => {
     if (!allDrops.length) return
@@ -243,10 +322,19 @@ function WheelPage() {
     }
   }, [])
   
-  // Animate lights
+  // Animate lights - используем ref для избежания ре-рендеров
+  const lightsRef = useRef(null)
   useEffect(() => {
+    let phase = 0
     const interval = setInterval(() => {
-      setLightPhase(prev => (prev + 1) % 4)
+      phase = (phase + 1) % 4
+      if (lightsRef.current) {
+        const lights = lightsRef.current.querySelectorAll('.wheel-light')
+        lights.forEach((light, i) => {
+          const isLit = (i + phase) % 2 === 0
+          light.classList.toggle('wheel-light--lit', isLit)
+        })
+      }
     }, isSpinning ? 80 : 400)
     return () => clearInterval(interval)
   }, [isSpinning])
@@ -406,10 +494,8 @@ function WheelPage() {
   }
 
   return (
-    <div className="wheel-page">
-      <Header />
-
-      <main className="wheel-main">
+    <PageLayout activePage="wheel" className="wheel-page">
+      <div className="wheel-content">
         {/* Live feed bar - same as CasesPage */}
         <div className="live-feed-bar">
           <div className="live-indicator">
@@ -453,14 +539,13 @@ function WheelPage() {
             <div className="wheel-outer-glow"></div>
             
             {/* Lights ring */}
-            <div className="wheel-lights-ring">
+            <div className="wheel-lights-ring" ref={lightsRef}>
               {[...Array(NUM_LIGHTS)].map((_, i) => {
                 const angle = (i * 360) / NUM_LIGHTS
-                const isLit = (i + lightPhase) % 2 === 0
                 return (
                   <div
                     key={i}
-                    className={`wheel-light ${isLit ? 'wheel-light--lit' : ''}`}
+                    className={`wheel-light ${i % 2 === 0 ? 'wheel-light--lit' : ''}`}
                     style={{
                       '--light-angle': `${angle}deg`,
                     }}
@@ -783,29 +868,12 @@ function WheelPage() {
                               <p className="prizes-category-desc">{t(`wheel.${category.key}Desc`)}</p>
                               <div className="prizes-grid">
                                 {category.drops.map(drop => (
-                                  <div key={drop.id} className="prize-card">
-                                    <div className="prize-image">
-                                      {drop.lottie_anim ? (
-                                        <Player
-                                          autoplay
-                                          loop
-                                          src={drop.lottie_anim}
-                                          className="prize-animation"
-                                        />
-                                      ) : (
-                                        <img 
-                                          src={drop.icon} 
-                                          alt={drop.name} 
-                                          className="prize-img"
-                                          loading="lazy"
-                                        />
-                                      )}
-                                    </div>
-                                    <span className="prize-price-badge">
-                                      <img src={currencyIcon} alt="currency" className="prize-price-coin" />
-                                      {formatAmount(drop.price)}
-                                    </span>
-                                  </div>
+                                  <PrizeCard
+                                    key={drop.id}
+                                    drop={drop}
+                                    currencyIcon={currencyIcon}
+                                    formatAmount={formatAmount}
+                                  />
                                 ))}
                               </div>
                             </div>
@@ -819,10 +887,8 @@ function WheelPage() {
             </div>
           </div>
         )}
-      </main>
-
-      <Navigation activePage="wheel" />
-    </div>
+      </div>
+    </PageLayout>
   )
 }
 

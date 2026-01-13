@@ -1,0 +1,128 @@
+/* ========================================
+   Desktop Modal Styles - общие стили для модальных окон
+   ======================================== */
+
+/* Десктоп стили для всех модальных окон */
+@media (min-width: 769px) {
+  /* Центрирование оверлея - ВСЕГДА по центру */
+  .deposit-modal-overlay,
+  .withdraw-modal-overlay,
+  .inventory-modal-overlay,
+  .bet-modal-overlay,
+  .case-modal-overlay {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 24px !important;
+  }
+
+  /* Центрированный контент модала */
+  .deposit-modal-content,
+  .withdraw-modal-content,
+  .inventory-modal-content,
+  .bet-modal-content,
+  .case-modal-content {
+    position: relative !important;
+    margin: auto !important;
+    border-radius: 24px !important;
+    animation: modal-scale-in 0.3s ease-out !important;
+    max-width: 520px !important;
+    width: calc(100% - 48px) !important;
+    max-height: 90vh !important;
+    transform: none !important;
+  }
+
+  @keyframes modal-scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Скрываем ручку для свайпа на десктопе */
+  .deposit-modal-handle,
+  .withdraw-modal-handle,
+  .inventory-modal-handle,
+  .bet-modal-handle,
+  .case-modal-handle,
+  .deposit-modal-handle-bar,
+  .withdraw-modal-handle-bar,
+  .inventory-modal-handle-bar,
+  .bet-modal-handle-bar,
+  .case-modal-handle-bar {
+    display: none !important;
+  }
+
+  /* Показываем кнопку закрытия */
+  .modal-close-btn {
+    display: flex !important;
+  }
+}
+
+/* Кнопка закрытия (крестик) - общие стили */
+.modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+  z-index: 10;
+}
+
+.modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.modal-close-btn::before,
+.modal-close-btn::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 2px;
+  background: #fff;
+  border-radius: 1px;
+}
+
+.modal-close-btn::before {
+  transform: rotate(45deg);
+}
+
+.modal-close-btn::after {
+  transform: rotate(-45deg);
+}
+
+/* Мобильные стили - показываем ручку, скрываем крестик */
+@media (max-width: 768px) {
+  .modal-close-btn {
+    display: none !important;
+  }
+  
+  .deposit-modal-handle,
+  .withdraw-modal-handle,
+  .inventory-modal-handle,
+  .bet-modal-handle,
+  .case-modal-handle {
+    display: flex !important;
+  }
+  
+  .deposit-modal-handle-bar,
+  .withdraw-modal-handle-bar,
+  .inventory-modal-handle-bar,
+  .bet-modal-handle-bar,
+  .case-modal-handle-bar {
+    display: block !important;
+  }
+}

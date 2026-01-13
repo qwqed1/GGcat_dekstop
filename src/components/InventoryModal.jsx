@@ -193,6 +193,9 @@ function InventoryModal({ isOpen, onClose, items, loading, onSellItem, onSellAll
         ref={contentRef}
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Кнопка закрытия для десктопа */}
+        <button className="modal-close-btn" onClick={onClose} aria-label="Close" />
+        
         <div
           className="inventory-modal-handle"
           role="button"

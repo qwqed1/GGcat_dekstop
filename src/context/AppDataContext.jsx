@@ -98,7 +98,7 @@ export function AppDataProvider({ children }) {
       setError(err.message)
       setLoading(false)
     }
-  }, [preloadImages, cases])
+  }, [preloadImages])
 
   return (
     <AppDataContext.Provider
