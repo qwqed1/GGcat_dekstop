@@ -1,6 +1,14 @@
 const API_URL = import.meta.env.VITE_API_URL
 
+if (!API_URL) {
+  console.error('❌ VITE_API_URL is not defined! Check your environment variables.')
+}
+
 export async function apiFetch(path, options = {}) {
+  if (!API_URL) {
+    throw new Error('API URL not configured')
+  }
+
   const controller = new AbortController()
   const timeoutId = setTimeout(() => controller.abort(), 15000) // 15s timeout
 
