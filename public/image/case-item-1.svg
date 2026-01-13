@@ -1,0 +1,25 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Golden Handbag -->
+  <defs>
+    <linearGradient id="goldGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="50%" style="stop-color:#FFA500"/>
+      <stop offset="100%" style="stop-color:#FF8C00"/>
+    </linearGradient>
+    <linearGradient id="goldGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFE55C"/>
+      <stop offset="100%" style="stop-color:#CC8800"/>
+    </linearGradient>
+  </defs>
+  <!-- Handle -->
+  <path d="M35 45 Q60 20 85 45" stroke="url(#goldGrad1)" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <!-- Bag body -->
+  <rect x="25" y="45" width="70" height="55" rx="8" fill="url(#goldGrad1)"/>
+  <!-- Bag flap -->
+  <path d="M25 55 Q60 65 95 55 L95 70 Q60 80 25 70 Z" fill="url(#goldGrad2)"/>
+  <!-- Lock -->
+  <circle cx="60" cy="72" r="8" fill="#8B4513"/>
+  <circle cx="60" cy="72" r="5" fill="#FFD700"/>
+  <!-- Shine -->
+  <ellipse cx="40" cy="70" rx="8" ry="15" fill="rgba(255,255,255,0.2)"/>
+</svg>

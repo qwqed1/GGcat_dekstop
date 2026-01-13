@@ -1,0 +1,375 @@
+.cases-page {
+  min-height: 100vh;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  position: relative;
+  padding-bottom: 100px;
+}
+
+.cases-page .top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: var(--dark-bg);
+  color: var(--white);
+}
+
+.cases-page .close-text {
+  font-size: 16px;
+  color: var(--white);
+}
+
+.cases-page .chevron {
+  font-size: 20px;
+  color: var(--white);
+}
+
+/* Live Feed Bar */
+
+.live-feed-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  margin-bottom: 16px;
+}
+
+.live-indicator {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 26px;
+  height: 52px;
+  min-width: 26px;
+  max-width: 26px;
+  background: #300d60;
+  border-radius: 6px;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: #76DA19;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.live-text {
+  font-size: 12px;
+  color: #76DA19;
+  font-weight: 500;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+
+.live-items-wrapper {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.live-items-track {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 10px;
+  width: max-content;
+  will-change: transform;
+}
+
+
+
+
+.live-item {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  max-width: 52px;
+  min-height: 52px;
+  max-height: 52px;
+  flex: 0 0 52px;
+  background: rgba(139, 92, 246, 0.2);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  animation: live-item-appear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes live-item-appear {
+  0% {
+    opacity: 0;
+    transform: translateX(20px) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.live-item-image {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+
+.live-item-animation {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+}
+
+.live-item-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+/* Tabs */
+.cases-tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 16px;
+  margin-bottom: 20px;
+}
+
+.cases-tab {
+  flex: 1;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 11px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cases-tab:first-child {
+  border-radius: 11px 0 0 11px;
+}
+
+.cases-tab:last-child {
+  border-radius: 0 11px 11px 0;
+}
+
+.cases-tab.active {
+  background: var(--active-btn);
+  color: var(--white);
+  box-shadow: 0 4px 15px rgba(107, 63, 216, 0.4);
+}
+
+.cases-tab:not(.active) {
+  background: #2b0d6d;
+  color: #c5beff;
+}
+
+.cases-tab:not(.active):hover {
+  background: #351481;
+  color: #ffffff;
+}
+
+/* Cases Grid */
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 0 16px;
+}
+
+.case-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.case-card-wrapper:hover {
+  transform: translateY(-4px);
+}
+
+.case-card-wrapper:active {
+  transform: scale(0.98);
+}
+
+.case-card {
+  background: #291E42;
+  border-radius: 20px;
+  padding: 0;
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* Removed hover/active from here as it's on wrapper now */
+}
+
+/* Price Below */
+.case-price-below {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #fff;
+  font-size: 18px; /* Increased size for readability */
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 12px;
+  width: fit-content;
+  margin: 0 auto; /* Center horizontally */
+  margin-top: -8px; /* Поднять впритык к кейсу */
+  position: relative;
+  z-index: 2;
+}
+
+.case-price-badge {
+  /* Only used for Free badge now */
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 4px 8px;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+}
+
+.case-price-badge--free {
+  left: 0;
+  top: 0;
+  background: radial-gradient(circle at 30% 30%, #7CC51F 0%, #3E6B00 100%);
+  padding: 4px 12px;
+  border-radius: 16px 0 32px 0;
+  height: 30px;
+  min-width: 70px;
+  justify-content: flex-start;
+}
+
+.price-diamond {
+  width: 18px;
+  height: 18px;
+}
+
+.price-amount {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.free-badge {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Case Image */
+.case-image-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.case-item-image {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  border-radius: inherit;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  padding: 10px;
+}
+
+.case-item-animation {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+}
+
+/* Placeholder when no image */
+.case-card .placeholder-icon {
+  font-size: 48px;
+  opacity: 0.8;
+}
+
+/* Cases Main */
+.cases-main {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+/* Scrollbar styling */
+.cases-main::-webkit-scrollbar {
+  width: 4px;
+}
+
+.cases-main::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cases-main::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 360px) {
+  .cases-grid {
+    gap: 8px;
+    padding: 0 12px;
+  }
+  
+  .case-card {
+    padding: 0;
+    border-radius: 12px;
+  }
+  
+  .cases-tab {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+}

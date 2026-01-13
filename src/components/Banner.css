@@ -1,0 +1,11 @@
+.banner {
+  border-radius: 16px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.banner-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}

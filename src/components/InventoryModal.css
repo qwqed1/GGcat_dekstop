@@ -1,0 +1,448 @@
+/* Оверлей */
+.inventory-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: inventory-overlay-fade-in 0.3s ease-out;
+}
+
+@keyframes inventory-overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Контент модала */
+.inventory-modal-content {
+  width: min(420px, calc(100% - 48px));
+  background: #2E2247;
+  border-radius: 24px 24px 0 0;
+  padding: 12px 20px 32px;
+  animation: inventory-modal-slide-up 0.3s ease-out;
+  touch-action: pan-y;
+  user-select: none;
+  min-height: 300px;
+  max-height: 75vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes inventory-modal-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Ручка для свайпа */
+.inventory-modal-handle {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 16px;
+}
+/* Inventory Modal Overlay */
+.inventory-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 3, 38, 0.95);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes inventory-slide-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* Modal Container */
+.inventory-modal {
+  width: min(420px, calc(100% - 48px));
+  max-height: 85vh;
+  background: #291E42;
+  border-radius: 24px 24px 0 0;
+  display: flex;
+  animation: inventory-slide-up 0.3s ease-out;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Handle (как в других модалках) */
+.inventory-modal-handle {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0 6px;
+  cursor: grab;
+}
+
+.inventory-modal-handle:active {
+  cursor: grabbing;
+}
+
+.inventory-modal-handle:focus-visible {
+  outline: 2px solid rgba(139, 92, 246, 0.8);
+  outline-offset: 2px;
+}
+
+.inventory-modal-handle-bar {
+  width: 40px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal Header */
+.inventory-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px 20px;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.inventory-modal-title {
+  color: var(--white);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  width: 100%;
+}
+
+.inventory-modal-title span {
+  color: #A07BFF;
+  font-weight: 500;
+}
+
+.inventory-modal-close {
+  width: 40px;
+  height: 40px;
+  background: #1F0248;
+  border: none;
+  border-radius: 12px;
+  color: #B892FF;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.inventory-modal-close:hover {
+  background: #4A2E78;
+  color: #fff;
+}
+
+/* Sell All Section */
+.inventory-modal-actions {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+}
+
+.sell-all-modal-btn {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #6B3FD8 0%, #8B5CF6 100%);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sell-all-modal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+}
+
+.sell-all-modal-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.total-value {
+  color: #A07BFF;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.total-value span {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Items Grid Container */
+.inventory-modal-content {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+  background: transparent;
+  border-radius: 0;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #6B3FD8 #1F0248;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+.inventory-modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.inventory-modal-content::-webkit-scrollbar-track {
+  background: #1F0248;
+  border-radius: 3px;
+}
+
+.inventory-modal-content::-webkit-scrollbar-thumb {
+  background: #6B3FD8;
+  border-radius: 3px;
+}
+
+/* Items Grid */
+.inventory-modal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  justify-content: center;
+}
+
+/* Empty State */
+.inventory-modal-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #A07BFF;
+}
+
+.inventory-modal-empty-icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.inventory-modal-empty-text {
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Item Card */
+.inventory-modal-card {
+  background: linear-gradient(135deg, rgba(31, 2, 72, 0.8) 0%, rgba(41, 30, 66, 0.6) 100%);
+  border: none;
+  border-radius: 12px;
+  padding: 10px 8px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.inventory-modal-card:hover {
+  background: linear-gradient(135deg, rgba(41, 2, 92, 0.9) 0%, rgba(51, 40, 86, 0.7) 100%);
+  transform: translateY(-2px);
+}
+
+/* Rarity colors - subtle glow instead of border */
+.inventory-modal-card.rarity-common {
+  box-shadow: inset 0 0 20px rgba(156, 163, 175, 0.1);
+}
+
+.inventory-modal-card.rarity-rare {
+  box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.15);
+}
+
+.inventory-modal-card.rarity-epic {
+  box-shadow: inset 0 0 20px rgba(139, 92, 246, 0.15);
+}
+
+.inventory-modal-card.rarity-legendary {
+  box-shadow: inset 0 0 20px rgba(251, 191, 36, 0.2);
+}
+
+.inventory-modal-card-image {
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.inventory-modal-card-icon {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: brightness(1.1);
+}
+
+.inventory-modal-card-lottie {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.inventory-modal-card-name {
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 4px;
+  width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.2;
+  max-height: 36px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.inventory-modal-card-price {
+  color: #A07BFF;
+  font-size: 11px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.inventory-modal-card-price img {
+  width: 12px;
+  height: 12px;
+}
+
+/* Sell Button */
+.inventory-modal-sell-btn {
+  width: 100%;
+  padding: 8px 10px;
+  background: rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  border-radius: 8px;
+  color: #B892FF;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 32px;
+}
+
+.inventory-modal-sell-btn:hover {
+  background: linear-gradient(135deg, #6B3FD8 0%, #8B5CF6 100%);
+  border-color: transparent;
+  color: #fff;
+}
+
+.inventory-modal-sell-btn:active {
+  transform: scale(0.98);
+}
+
+/* Loading State */
+.inventory-modal-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #A07BFF;
+  font-size: 16px;
+}
+
+.inventory-modal-loading::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  margin-left: 12px;
+  border: 2px solid #A07BFF;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 430px) {
+  .inventory-modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .inventory-modal {
+    width: 100%;
+    border-radius: 24px 24px 0 0;
+  }
+
+  .inventory-modal {
+    max-height: 90vh;
+  }
+  
+  .inventory-modal-content {
+    width: 100%;
+    padding: 20px 0 32px;
+  }
+  
+  .inventory-modal-grid {
+    gap: 0;
+    margin: 0;
+    padding: 0 16px;
+  }
+  
+  .inventory-modal-card {
+    padding: 10px;
+  }
+  
+  .inventory-modal-card-name {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,766 @@
+.pvp-page {
+  background-color: var(--page-bg);
+}
+
+.pvp-content {
+  padding: 0 16px 90px;
+}
+
+/* Зона игры */
+.pvp-game-area {
+  background: var(--page-bg);
+  border-radius: 0;
+  padding: 16px;
+  margin: 0 -16px 12px;
+  width: calc(100% + 32px);
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.bet-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.6);
+  pointer-events: none;
+}
+
+/* Текст автовыбора */
+.pvp-auto-pick-text {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  margin: 16px 0;
+  animation: pulse-text 1s ease-in-out infinite;
+}
+
+@keyframes pulse-text {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+.pvp-game-area-fade {
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent 0%, var(--page-bg) 100%);
+  z-index: 5;
+  pointer-events: none;
+}
+.wheel-result-gift-image {
+  max-width: 120px;
+  max-height: 120px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.pvp-result-prize {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.pvp-result-gift-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--white);
+  text-align: center;
+  margin-top: 8px;
+}
+
+.pvp-result-gift-price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.pvp-result-gift-price-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+
+/* Вращающиеся лучи */
+.pvp-game-area::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 520px;
+  height: 520px;
+  background: repeating-conic-gradient(
+    from 90deg,
+    #260057 0deg 7.5deg,
+    #3a0b80 7.5deg 15deg
+  );
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+  animation: pvp-rays-rotate 25s linear infinite;
+  transition: opacity 0.4s ease;
+}
+
+@keyframes pvp-rays-rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.pvp-countdown::after,
+.pvp-result::after {
+  opacity: 0.3;
+}
+
+/* Контейнер боя */
+.pvp-battle-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+  min-height: 180px;
+  position: relative;
+  z-index: 2;
+  padding: 0 20px;
+}
+
+/* Коты */
+.pvp-page .pvp-cat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  width: auto;
+  height: auto;
+}
+
+.pvp-page .pvp-cat-image {
+  width: 130px !important;
+  height: 182px !important;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+  transition: transform 0.2s ease;
+}
+
+.pvp-page .pvp-cat-left .pvp-cat-image {
+  transform: scaleX(1);
+}
+
+.pvp-page .pvp-cat-right .pvp-cat-image {
+  transform: scaleX(1);
+}
+
+/* Анимация вверх-вниз для котов когда игра неактивна */
+.pvp-page .pvp-cat:not(.fighting):not(.winner):not(.loser) {
+  animation: cat-idle-bounce 2s ease-in-out infinite;
+}
+
+.pvp-page .pvp-cat-left:not(.fighting):not(.winner):not(.loser) {
+  animation-delay: 0s;
+}
+
+.pvp-page .pvp-cat-right:not(.fighting):not(.winner):not(.loser) {
+  animation-delay: 0.5s;
+}
+
+@keyframes cat-idle-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.pvp-page .pvp-cat.fighting {
+  animation: cat-shake 0.1s ease-in-out infinite;
+}
+
+.pvp-page .pvp-cat.winner {
+  animation: cat-winner 0.5s ease-out;
+  filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.6));
+}
+
+.pvp-page .pvp-cat.loser {
+  filter: grayscale(0.7) brightness(0.6);
+  transform: translateY(10px);
+}
+
+@keyframes cat-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes cat-winner {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Действия котов */
+.pvp-cat-action {
+  position: absolute;
+  bottom: -30px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pvp-cat-action.attack {
+  background: linear-gradient(135deg, rgba(255, 80, 80, 0.9), rgba(200, 40, 40, 0.9));
+  box-shadow: 0 2px 8px rgba(255, 80, 80, 0.4);
+}
+
+.pvp-cat-action.defend {
+  background: linear-gradient(135deg, rgba(80, 140, 255, 0.9), rgba(40, 80, 200, 0.9));
+  box-shadow: 0 2px 8px rgba(80, 140, 255, 0.4);
+}
+
+.action-icon {
+  font-size: 12px;
+}
+
+.action-label {
+  color: var(--white);
+}
+
+/* Центральная область */
+.pvp-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+  z-index: 3;
+}
+
+.pvp-vs {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 36px;
+  font-weight: 900;
+  background: linear-gradient(180deg, #FFAF4D 0%, #FFF7A7 50%, #FFAF4D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(255, 175, 77, 0.5));
+  animation: vs-pulse 2s ease-in-out infinite;
+}
+
+@keyframes vs-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Отсчёт */
+.pvp-countdown-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pvp-countdown-display .countdown-number {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 80px;
+  line-height: 100%;
+  font-weight: 1000;
+  background-image: linear-gradient(180deg, #FFAF4D 0%, #FFF7A7 50%, #FFAF4D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 30px rgba(255, 175, 77, 0.6));
+  -webkit-text-stroke: 1px #0D0326;
+  animation: countdown-pulse 1s ease-in-out;
+}
+
+@keyframes countdown-pulse {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Бой */
+.pvp-fighting-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fighting-icon {
+  width: 60px;
+  height: 60px;
+  animation: swords-clash 0.3s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(187, 253, 68, 0.6));
+}
+
+@keyframes swords-clash {
+  0%, 100% { transform: rotate(-5deg) scale(1); }
+  50% { transform: rotate(5deg) scale(1.1); }
+}
+
+/* Результат */
+.pvp-result-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 12px;
+}
+
+.pvp-result-display.win {
+  background: linear-gradient(135deg, rgba(0, 200, 83, 0.3), rgba(0, 150, 60, 0.3));
+  box-shadow: 0 0 30px rgba(0, 200, 83, 0.5);
+}
+
+.pvp-result-display.lose {
+  background: linear-gradient(135deg, rgba(255, 80, 80, 0.3), rgba(200, 40, 40, 0.3));
+  box-shadow: 0 0 30px rgba(255, 80, 80, 0.5);
+}
+
+.pvp-result-display.draw {
+  background: linear-gradient(135deg, rgba(255, 200, 0, 0.3), rgba(200, 150, 0, 0.3));
+  box-shadow: 0 0 30px rgba(255, 200, 0, 0.5);
+}
+
+.result-text {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--white);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Секция выбора атаки/защиты */
+.pvp-selection-area {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.pvp-selection-block {
+  background: rgba(16, 2, 48, 0.6);
+  border-radius: 12px;
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.selection-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0 0 10px 0;
+}
+
+.selection-icon {
+  font-size: 16px;
+}
+
+.selection-options {
+  display: flex;
+  gap: 8px;
+}
+
+.selection-button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 8px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.selection-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.selection-button.selected {
+  border-width: 2px;
+}
+
+.selection-button.attack-selected {
+  background: linear-gradient(135deg, rgba(255, 80, 80, 0.3), rgba(200, 40, 40, 0.2));
+  border-color: #ff5050;
+  box-shadow: 0 0 12px rgba(255, 80, 80, 0.4);
+}
+
+.selection-button.defend-selected {
+  background: linear-gradient(135deg, rgba(80, 140, 255, 0.3), rgba(40, 80, 200, 0.2));
+  border-color: #508cff;
+  box-shadow: 0 0 12px rgba(80, 140, 255, 0.4);
+}
+
+.part-icon {
+  font-size: 18px;
+}
+
+.part-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+/* Кнопка ставки */
+.pvp-page .bet-button {
+  width: 100%;
+  height: 56px;
+  padding: 8px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 2px 0 20px;
+  border: none;
+  border-radius: 14px;
+  background: radial-gradient(circle at 0% 100%, #2C7DF8 0%, #951BF9 100%);
+  color: var(--white);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 130%;
+  letter-spacing: -0.02em;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 8px 8px 32px rgba(37, 2, 72, 0.5);
+}
+
+.pvp-autopick-hint {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 8px 0 8px;
+}
+
+.pvp-page .bet-button.waiting {
+  background: linear-gradient(135deg, #4a4a6a 0%, #3a3a5a 100%);
+  cursor: not-allowed;
+}
+
+.waiting-text {
+  min-width: 120px;
+  text-align: center;
+}
+
+.pvp-waiting-spinner {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.22);
+  border-top-color: rgba(255, 255, 255, 0.95);
+  animation: pvp-spin 0.8s linear infinite;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+@keyframes pvp-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Матч-панель (профили и ставки) */
+.pvp-match-panel {
+  margin: 12px 0 14px;
+  padding: 0;
+}
+
+.pvp-match-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.pvp-player-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 140px;
+  max-width: 48%;
+  flex-wrap: wrap;
+}
+
+.pvp-player-chip--right {
+  justify-content: flex-end;
+}
+
+.pvp-player-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+}
+
+.pvp-player-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--white);
+  opacity: 0.95;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: calc(100% - 54px);
+}
+
+.pvp-bets-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.pvp-bet-card {
+  background: rgba(16, 2, 48, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+}
+
+.pvp-bet-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(195, 149, 255, 0.95);
+  margin-bottom: 6px;
+}
+
+.pvp-bet-value {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--white);
+}
+
+.pvp-bet-currency-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+}
+
+.pvp-gift-bet {
+  position: relative;
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 28px;
+}
+
+.pvp-gift-bet-price {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pvp-gift-bet-currency-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+}
+
+.pvp-gift-bet-price-value {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1;
+}
+
+.pvp-gift-bet-image {
+  width: 61px;
+  height: 61px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 26px rgba(0, 0, 0, 0.35));
+}
+
+/* Заголовок списка игроков */
+.players-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 4px;
+}
+
+.players-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.players-count {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Статус PvP */
+.pvp-status {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.status-badge.fighting {
+  background: linear-gradient(135deg, rgba(255, 80, 80, 0.8), rgba(200, 40, 40, 0.8));
+  color: var(--white);
+}
+
+.status-badge.waiting {
+  background: linear-gradient(135deg, rgba(255, 200, 0, 0.8), rgba(200, 150, 0, 0.8));
+  color: #1a1a1a;
+}
+
+/* Список игроков (переиспользуем из CrashPage) */
+.pvp-page .players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pvp-page .player-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pvp-page .player-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pvp-page .player-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  overflow: hidden;
+}
+
+.pvp-page .player-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.pvp-page .player-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pvp-page .player-name {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 130%;
+  color: var(--white);
+}
+
+.pvp-page .player-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pvp-page .coin-icon-small {
+  width: 16px;
+  height: 16px;
+}
+
+.pvp-page .stat-bet {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.pvp-page .stat-multiplier {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.pvp-page .player-reward {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0;
+}
+
+.pvp-page .reward-amount-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 70px;
+}
+
+.pvp-page .coin-icon-large {
+  width: 22px;
+  height: 22px;
+}
+
+.pvp-page .reward-amount {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.pvp-page .reward-amount.text-green {
+  color: var(--white);
+}

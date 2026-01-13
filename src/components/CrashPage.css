@@ -1,0 +1,710 @@
+.crash-page {
+  background-color: var(--page-bg);
+}
+
+.crash-content {
+  padding: 0 16px 90px;
+}
+
+/* Зона игры */
+.crash-game-area {
+  background: var(--page-bg);
+  border-radius: 0;
+  padding: 16px;
+  margin: 0 -16px 12px;
+  width: calc(100% + 32px);
+  min-height: 294px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.crash-game-area-fade {
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent 0%, var(--page-bg) 100%);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.cosmic-background {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 200, 64, 0.18), transparent 45%),
+    radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.22), transparent 35%),
+    radial-gradient(circle at 50% 70%, rgba(255, 175, 77, 0.15), transparent 55%),
+    linear-gradient(140deg, rgba(10, 0, 32, 0.95) 0%, rgba(26, 4, 70, 0.95) 60%, rgba(48, 8, 110, 0.9) 100%);
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 4s ease;
+  transform: scale(1.02);
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.cosmic-background::before,
+.cosmic-background::after {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background-repeat: repeat;
+  background-size: 220px 220px;
+  animation: cosmic-drift 4s linear infinite;
+  opacity: 0.85;
+}
+
+.cosmic-background::before {
+  background-image: 
+    radial-gradient(1px 1px at 15px 25px, rgba(255, 240, 180, 0.9), transparent),
+    radial-gradient(2px 2px at 80px 140px, rgba(255, 215, 64, 0.85), transparent),
+    radial-gradient(1.5px 1.5px at 140px 60px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1px 1px at 200px 180px, rgba(255, 200, 120, 0.8), transparent),
+    radial-gradient(1.2px 1.2px at 50px 100px, rgba(255, 255, 255, 0.85), transparent),
+    radial-gradient(1px 1px at 170px 40px, rgba(255, 230, 150, 0.9), transparent),
+    radial-gradient(1.5px 1.5px at 100px 170px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1px 1px at 30px 150px, rgba(255, 220, 100, 0.85), transparent);
+  filter: drop-shadow(0 0 6px rgba(255, 212, 128, 0.45));
+}
+
+.cosmic-background::after {
+  background-image: 
+    radial-gradient(1px 1px at 30px 80px, rgba(255, 255, 255, 0.75), transparent),
+    radial-gradient(1.8px 1.8px at 110px 20px, rgba(255, 214, 0, 0.95), transparent),
+    radial-gradient(1px 1px at 190px 120px, rgba(255, 255, 255, 0.85), transparent),
+    radial-gradient(1.2px 1.2px at 70px 190px, rgba(255, 196, 104, 0.9), transparent),
+    radial-gradient(1px 1px at 150px 60px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1.3px 1.3px at 40px 130px, rgba(255, 230, 180, 0.85), transparent),
+    radial-gradient(1px 1px at 180px 170px, rgba(255, 255, 255, 0.75), transparent),
+    radial-gradient(1.5px 1.5px at 90px 50px, rgba(255, 200, 100, 0.9), transparent);
+  background-size: 260px 260px;
+  animation-duration: calc(var(--star-speed, 8s) * 1.5);
+  opacity: 0.7;
+}
+
+.cosmic-background-active {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+@keyframes cosmic-drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-80px, -50px, 0);
+  }
+}
+
+/* Venus.png на заднем фоне с вращением на месте */
+.crash-game-area::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 16px;
+  width: 100px;
+  height: 100px;
+  background-image: url('/image/Venus.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.7;
+  z-index: 2;
+  pointer-events: none;
+  animation: moon-spin 3s linear infinite;
+}
+
+/* Остановка вращения луны во время отсчёта */
+.crash-countdown::before {
+  animation: none;
+}
+
+/* Ускоренное вращение и пульсация луны во время полёта */
+.crash-no-rays::before {
+  animation: moon-spin 3s linear infinite, moon-pulse 2s ease-in-out infinite;
+}
+
+/* Остановка вращения луны после окончания игры - должно быть после crash-no-rays для приоритета */
+.crash-game-area.crash-postflight::before,
+.crash-game-area.crash-postflight-done::before {
+  animation: none !important;
+}
+
+@keyframes moon-spin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes moon-pulse {
+  0%, 100% {
+    filter: brightness(1) drop-shadow(0 0 8px rgba(138, 100, 255, 0.4));
+  }
+  50% {
+    filter: brightness(1.2) drop-shadow(0 0 20px rgba(138, 100, 255, 0.8));
+  }
+}
+
+/* Вращающиеся лучи от центра, как на макете */
+.crash-game-area::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 520px;
+  height: 520px;
+  background: repeating-conic-gradient(
+    from 90deg,
+    #260057 0deg 7.5deg,
+    #3a0b80 7.5deg 15deg
+  );
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+  animation: crash-rays-rotate 25s linear infinite;
+  transition: opacity 0.4s ease;
+}
+
+@keyframes crash-rays-rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Класс, отключающий лучи после окончания отсчёта */
+.crash-no-rays::after {
+  opacity: 0;
+}
+
+/* Контейнер анимации */
+.crash-animation-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  padding-bottom: 48px;
+}
+
+.lottie-preflight,
+.lottie-postflight,
+.lottie-cat {
+  width: 220px;
+  height: 220px;
+}
+
+.lottie-postflight {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.lottie-cat {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  pointer-events: none;
+  z-index: 2;
+  transition: transform 0.1s ease-out;
+  animation: catShake 0.15s ease-in-out infinite;
+}
+
+@keyframes catShake {
+  0%, 100% {
+    transform: translate(-50%, -50%);
+  }
+  25% {
+    transform: translate(calc(-50% + 1px), calc(-50% - 0.5px));
+  }
+  50% {
+    transform: translate(calc(-50% - 0.5px), calc(-50% + 1px));
+  }
+  75% {
+    transform: translate(calc(-50% + 0.5px), calc(-50% + 0.5px));
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+/* Бесшовный переход между фазами анимации кота */
+.lottie-cat-phase {
+  transition: opacity 0.15s ease-out;
+}
+
+.lottie-cat-phase.active {
+  opacity: 1;
+}
+
+.lottie-cat-phase.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Кривая линия коэффициента - логарифмическая */
+.coeff-path {
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  width: 100%;
+  height: 280px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.coeff-path-line-dynamic {
+  fill: none;
+  stroke: var(--crash-gradient-end);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Обратный отсчёт */
+.countdown-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 46px;
+}
+
+.countdown-number {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 100px;
+  line-height: 100%;
+  font-weight: 1000;
+  letter-spacing: 0;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(180deg, #FFAF4D 0%, #FFF7A7 50%, #FFAF4D 100%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 30px rgba(255, 175, 77, 0.6));
+  -webkit-text-stroke: 1px #0D0326;
+  animation: countdown-pulse 1s ease-in-out;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes countdown-pulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Множитель */
+.multiplier-display {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  padding: 4px 16px;
+  transition: top 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Коэффициент к позиции кота при краше */
+.multiplier-display.centered {
+  top: calc(50% - 24px);
+  transform: translate(-50%, -50%) scale(1.3);
+}
+
+/* Статичный стиль для итогового коэффициента (без анимации) */
+.multiplier-display.sparkle .multiplier-value {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 15px rgba(255, 175, 77, 0.5));
+}
+
+.multiplier-value {
+  position: relative;
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0;
+  background: linear-gradient(180deg, #FFAF4D 0%, #FFF7A7 50%, #FFAF4D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-text-stroke: 1px #0d0326;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+}
+
+/* История коэффициентов */
+.coeff-history-overlay {
+  position: absolute;
+  bottom: 22px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.coeff-history {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  pointer-events: auto;
+}
+
+.coeff-history::-webkit-scrollbar {
+  height: 0;
+}
+
+.coeff-history {
+  scrollbar-width: none;
+}
+
+.coeff-history-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(16, 2, 48, 0.92);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.coeff-history-item.active {
+  background: linear-gradient(135deg, rgba(144, 40, 255, 0.65) 0%, rgba(102, 20, 255, 0.8) 100%);
+  border-color: #9028ff;
+  box-shadow: 0 0 12px rgba(102, 20, 255, 0.65);
+}
+
+.coeff-history-item.live {
+  background: linear-gradient(135deg, rgba(144, 40, 255, 0.65) 0%, rgba(102, 20, 255, 0.8) 100%);
+  border-color: #9028ff;
+  box-shadow: 0 0 12px rgba(102, 20, 255, 0.65);
+}
+
+/* Кнопка ставки */
+.bet-button {
+  width: 100%;
+  height: 56px;
+  padding: 8px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 2px 0 20px;
+  border: none;
+  border-radius: 14px;
+  background: radial-gradient(circle at 0% 100%, #2C7DF8 0%, #951BF9 100%);
+  color: var(--white);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 130%;
+  letter-spacing: -0.02em;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 8px 8px 32px rgba(37, 2, 72, 0.5);
+}
+
+.bet-button:hover:not(.gg-btn-glow) {
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+
+.bet-button:active:not(.gg-btn-glow) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.bet-button.disabled {
+  background: linear-gradient(135deg, #4a4a6a 0%, #3a3a5a 100%);
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
+  transform: none;
+}
+
+.bet-button.disabled:hover,
+.bet-button.disabled:active {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Crash win modal multiplier */
+.crash-win-multiplier {
+  font-size: 32px;
+  font-weight: 800;
+  color: #7CFC00;
+  margin: 0 0 16px;
+  text-align: center;
+  text-shadow: 0 0 20px rgba(124, 252, 0, 0.5);
+}
+
+.crash-win-coin-icon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+  animation: coin-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes coin-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Список игроков */
+.players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.player-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  animation: player-appear 0.4s ease-out forwards;
+}
+
+@keyframes player-appear {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.player-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  overflow: hidden;
+}
+
+.player-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.player-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.player-name {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 130%;
+  letter-spacing: 0;
+  color: var(--white);
+}
+
+.player-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.coin-icon-small {
+  width: 16px;
+  height: 16px;
+}
+
+.stat-bet {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.stat-multiplier {
+  font-size: 13px;
+  font-weight: 400;
+  color: #7CFC00; /* Bright green like mockup */
+}
+
+.player-reward {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0; /* Spacing handled by fixed widths */
+}
+
+.reward-amount-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 70px; /* Reduced width to bring gift closer */
+}
+
+.coin-icon-large {
+  width: 22px;
+  height: 22px;
+}
+
+.reward-amount {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.reward-amount.text-green {
+  color: #7CFC00;
+}
+.reward-amount.text-red {
+  color: #ff4d4f;
+}
+
+/* Win/Lose background animations for player rows */
+.player-row--won {
+  animation: player-won-flash 1.5s ease-out forwards;
+  margin-left: -16px;
+  margin-right: -16px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.player-row--lost {
+  animation: player-lost-flash 1.5s ease-out forwards;
+  margin-left: -16px;
+  margin-right: -16px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+@keyframes player-won-flash {
+  0% {
+    background: rgba(124, 252, 0, 0.4);
+  }
+  30% {
+    background: rgba(124, 252, 0, 0.25);
+  }
+  100% {
+    background: rgba(124, 252, 0, 0.08);
+  }
+}
+
+@keyframes player-lost-flash {
+  0% {
+    background: rgba(255, 77, 79, 0.4);
+  }
+  30% {
+    background: rgba(255, 77, 79, 0.25);
+  }
+  100% {
+    background: rgba(255, 77, 79, 0.08);
+  }
+}
+.gift-container {
+  width: 62px; /* Reserve space for gift - reduced 30% */
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 4px;
+  margin-right: 0;
+}
+
+.gift-icon {
+  width: 62px;
+  height: 62px;
+  object-fit: contain;
+  display: block;
+  animation: crash-gift-swap 220ms ease, gift-sway 2s ease-in-out infinite;
+}
+
+@keyframes crash-gift-swap {
+  0% {
+    opacity: 0;
+    transform: scale(0.92) rotate(-6deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Анимация покачивания подарков во время полёта */
+@keyframes gift-sway {
+  0%, 100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}

@@ -1,0 +1,73 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #1a0533 0%, #0d0118 50%, #1a0533 100%);
+  z-index: 9999;
+}
+
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.preloader-logo {
+  width: 200px; /* Increased size */
+  height: auto;
+  filter: drop-shadow(0 0 20px rgba(187, 253, 68, 0.3));
+}
+
+.preloader-progress-container {
+  width: 200px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  margin-top: 20px;
+}
+
+.preloader-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #BBFD44, #76FF03, #BBFD44);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  position: relative;
+  box-shadow: 0 0 10px rgba(187, 253, 68, 0.5);
+}
+
+.preloader-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.preloader-text {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  margin: 0;
+  letter-spacing: 1px;
+}

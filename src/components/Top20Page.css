@@ -1,0 +1,128 @@
+ .top20-page {
+  background-color: var(--page-bg);
+ }
+ 
+ .top20-content {
+  padding: 18px 16px 100px;
+ }
+ 
+ .top20-card {
+  background: #291E42;
+  border-radius: 22px;
+  padding: 18px 14px 10px;
+ }
+ 
+ .top20-title {
+  color: #a07bff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 0 12px 0;
+ }
+ 
+ .top20-list {
+  display: flex;
+  flex-direction: column;
+ }
+ 
+ .top20-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 12px;
+  background: rgba(36, 0, 88, 0.65);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+ }
+ 
+ .top20-row + .top20-row {
+  margin-top: 10px;
+ }
+ 
+ .top20-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+ }
+ 
+ .top20-rank {
+  width: 18px;
+  min-width: 18px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-weight: 700;
+ }
+ 
+ .top20-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+ }
+ 
+ .top20-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+ }
+ 
+ .top20-name {
+  color: var(--white);
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+ }
+ 
+ .top20-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
+ }
+ 
+ .top20-you {
+  font-size: 12px;
+  font-weight: 800;
+  color: #b892ff;
+  letter-spacing: 0.02em;
+ }
+ 
+ .top20-score {
+  color: var(--white);
+  font-size: 15px;
+  font-weight: 700;
+ }
+ 
+ .top20-currency {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+ }
+ 
+ .top20-row--gold {
+  border-width: 2px;
+  border-color: rgba(255, 200, 64, 1);
+ }
+ 
+ .top20-row--silver {
+  border-width: 2px;
+  border-color: rgba(192, 192, 192, 1);
+ }
+ 
+ .top20-row--bronze {
+  border-width: 2px;
+  border-color: rgba(205, 127, 50, 1);
+ }
+ 
+ .top20-row--you .top20-name {
+  opacity: 0.85;
+ }

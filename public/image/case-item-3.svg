@@ -1,0 +1,30 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pink Crystals -->
+  <defs>
+    <linearGradient id="pinkGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF69B4"/>
+      <stop offset="50%" style="stop-color:#FF1493"/>
+      <stop offset="100%" style="stop-color:#C71585"/>
+    </linearGradient>
+    <linearGradient id="pinkGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFB6C1"/>
+      <stop offset="100%" style="stop-color:#FF69B4"/>
+    </linearGradient>
+    <linearGradient id="pinkGrad3" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF1493"/>
+      <stop offset="100%" style="stop-color:#8B008B"/>
+    </linearGradient>
+  </defs>
+  <!-- Large crystal -->
+  <polygon points="60,15 75,45 75,85 60,100 45,85 45,45" fill="url(#pinkGrad1)"/>
+  <polygon points="60,15 75,45 60,50 45,45" fill="url(#pinkGrad2)"/>
+  <!-- Medium crystal left -->
+  <polygon points="30,40 40,60 40,90 30,100 20,90 20,60" fill="url(#pinkGrad3)"/>
+  <polygon points="30,40 40,60 30,65 20,60" fill="url(#pinkGrad2)"/>
+  <!-- Small crystal right -->
+  <polygon points="85,50 95,65 95,90 85,100 75,90 75,65" fill="url(#pinkGrad1)"/>
+  <polygon points="85,50 95,65 85,70 75,65" fill="url(#pinkGrad2)"/>
+  <!-- Shine effects -->
+  <line x1="50" y1="30" x2="55" y2="50" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+  <line x1="25" y1="55" x2="28" y2="70" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+</svg>

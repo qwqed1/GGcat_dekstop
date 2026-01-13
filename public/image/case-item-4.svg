@@ -1,0 +1,35 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Spartan Helmet -->
+  <defs>
+    <linearGradient id="helmetGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="50%" style="stop-color:#DAA520"/>
+      <stop offset="100%" style="stop-color:#B8860B"/>
+    </linearGradient>
+    <linearGradient id="helmetShine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFE55C"/>
+      <stop offset="100%" style="stop-color:#CC8800"/>
+    </linearGradient>
+    <linearGradient id="plumeRed" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#DC143C"/>
+      <stop offset="100%" style="stop-color:#8B0000"/>
+    </linearGradient>
+  </defs>
+  <!-- Helmet dome -->
+  <ellipse cx="60" cy="60" rx="35" ry="40" fill="url(#helmetGold)"/>
+  <!-- Face opening -->
+  <ellipse cx="60" cy="75" rx="20" ry="25" fill="#1a0a2e"/>
+  <!-- Nose guard -->
+  <rect x="55" y="50" width="10" height="40" fill="url(#helmetShine)"/>
+  <!-- Cheek guards -->
+  <path d="M30 60 Q25 80 35 100 L45 95 Q40 80 42 60 Z" fill="url(#helmetGold)"/>
+  <path d="M90 60 Q95 80 85 100 L75 95 Q80 80 78 60 Z" fill="url(#helmetGold)"/>
+  <!-- Plume -->
+  <path d="M60 20 Q65 10 60 5 Q70 15 75 10 Q70 25 80 20 Q70 35 60 25 Q50 35 40 20 Q50 25 45 10 Q50 15 55 5 Q50 10 60 20" fill="url(#plumeRed)"/>
+  <path d="M55 25 Q60 5 65 25 Q60 35 55 25" fill="url(#plumeRed)"/>
+  <!-- Decorative line -->
+  <ellipse cx="60" cy="45" rx="28" ry="5" fill="none" stroke="url(#helmetShine)" stroke-width="2"/>
+  <!-- Eye holes hint -->
+  <ellipse cx="48" cy="65" rx="6" ry="8" fill="#0d0518"/>
+  <ellipse cx="72" cy="65" rx="6" ry="8" fill="#0d0518"/>
+</svg>

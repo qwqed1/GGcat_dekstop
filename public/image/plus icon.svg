@@ -1,0 +1,13 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<foreignObject x="-5.83333" y="-5.83333" width="43.6667" height="43.6667"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(2.92px);clip-path:url(#bgblur_0_2287_5514_clip_path);height:100%;width:100%"></div></foreignObject><g data-figma-bg-blur-radius="5.83333">
+<rect width="32" height="32" rx="8" fill="url(#paint0_radial_2287_5514)"/>
+<path d="M16 6C16.3459 6 16.6777 6.13742 16.9223 6.38203C17.1669 6.62665 17.3043 6.95841 17.3043 7.30435V14.6957H24.6957C25.0416 14.6957 25.3734 14.8331 25.618 15.0777C25.8626 15.3223 26 15.6541 26 16C26 16.3459 25.8626 16.6777 25.618 16.9223C25.3734 17.1669 25.0416 17.3043 24.6957 17.3043H17.3043V24.6957C17.3043 25.0416 17.1669 25.3734 16.9223 25.618C16.6777 25.8626 16.3459 26 16 26C15.6541 26 15.3223 25.8626 15.0777 25.618C14.8331 25.3734 14.6957 25.0416 14.6957 24.6957V17.3043H7.30435C6.95841 17.3043 6.62665 17.1669 6.38203 16.9223C6.13742 16.6777 6 16.3459 6 16C6 15.6541 6.13742 15.3223 6.38203 15.0777C6.62665 14.8331 6.95841 14.6957 7.30435 14.6957H14.6957V7.30435C14.6957 6.95841 14.8331 6.62665 15.0777 6.38203C15.3223 6.13742 15.6541 6 16 6Z" fill="#0D0326"/>
+</g>
+<defs>
+<clipPath id="bgblur_0_2287_5514_clip_path" transform="translate(5.83333 5.83333)"><rect width="32" height="32" rx="8"/>
+</clipPath><radialGradient id="paint0_radial_2287_5514" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(16 16) rotate(90) scale(17 20.5208)">
+<stop offset="0.174115" stop-color="#BBFD44"/>
+<stop offset="0.934548" stop-color="#72C004"/>
+</radialGradient>
+</defs>
+</svg>
