@@ -159,9 +159,7 @@ function PartnerPage() {
   
 
   return (
-    <div className="partner-page">
-      <Header />
-      
+    <PageLayout activePage="partner" className="partner-page">
       <main className="partner-content">
         <h1 className="partner-title">{t('partner.title')}</h1>
 
@@ -292,7 +290,7 @@ function PartnerPage() {
       </main>
 
       <Navigation />
-    </div>
+    </PageLayout>
   )
 }
 

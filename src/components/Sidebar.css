@@ -109,6 +109,12 @@
   color: #fff;
 }
 
+.sidebar-divider {
+  height: 1px;
+  background: rgba(139, 92, 246, 0.2);
+  margin: 12px 0;
+}
+
 .sidebar-bottom {
   margin-top: auto;
   padding-top: 16px;

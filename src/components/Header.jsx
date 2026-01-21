@@ -7,6 +7,14 @@ import { useUser } from '../context/UserContext'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
 import InventoryModal from './InventoryModal'
+import { 
+  Plus, 
+  ArrowUpRight, 
+  Package, 
+  ChevronDown, 
+  Wallet,
+  Menu
+} from 'lucide-react'
 
 const accountTypes = [
   { id: 'usdt', name: 'USDT TON', icon: '💎', amount: '1.22' },
@@ -61,15 +69,15 @@ const {
       {/* Action Buttons */}
       <div className="header-actions">
         <button className="header-btn header-btn-deposit" onClick={() => setIsDepositModalOpen(true)}>
-          <span className="header-btn-icon">+</span>
+          <span className="header-btn-icon"><Plus size={18} strokeWidth={3} /></span>
           <span className="header-btn-text">{t('header.deposit')}</span>
         </button>
         <button className="header-btn header-btn-withdraw" onClick={() => setIsWithdrawModalOpen(true)}>
-          <span className="header-btn-icon">↑</span>
+          <span className="header-btn-icon"><ArrowUpRight size={18} strokeWidth={2.5} /></span>
           <span className="header-btn-text">{t('header.withdraw')}</span>
         </button>
         <button className="header-btn header-btn-inventory" onClick={() => navigate('/profile#inventory')}>
-          <span className="header-btn-icon">📦</span>
+          <span className="header-btn-icon"><Package size={18} /></span>
           <span className="header-btn-text">{t('header.inventory')}</span>
         </button>
       </div>
@@ -77,7 +85,7 @@ const {
       <div className="header-right">
         <div className="balance-container">
           <div className={`balance-box ${isDropdownOpen ? 'open' : ''}`}>
-            <div className="balance-info-wrapper">
+             <div className="balance-info-wrapper">
               <div 
                 className="balance-info" 
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -87,9 +95,7 @@ const {
                 </span>
                 <span className="balance-amount">{selectedCurrency.amount}</span>
                 <span className={`balance-arrow ${isDropdownOpen ? 'open' : ''}`}>
-                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
-                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#888" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <ChevronDown size={14} />
                 </span>
               </div>
             </div>
@@ -97,7 +103,7 @@ const {
   className="plus-btn"
   onClick={() => setIsDepositModalOpen(true)}
 >
-              <img src="/image/plus icon.svg" alt="plus" />
+              <Plus size={16} color="#000" strokeWidth={3} />
             </button>
 
             {isDropdownOpen && (
@@ -150,7 +156,7 @@ const {
               >
                 <div className="account-label">
                   {t('header.account')} • {selectedAccount.name}
-                  <span className={`account-arrow ${showAccountDropdown ? 'open' : ''}`}>⌄</span>
+                  <span className={`account-arrow ${showAccountDropdown ? 'open' : ''}`}><ChevronDown size={14} /></span>
                 </div>
                 <div className="account-balance">
                   <span className="account-icon">{selectedAccount.icon}</span>
@@ -188,7 +194,7 @@ const {
               >
                 <div className="account-label">
                   {selectedGameCurrency.name}
-                  <span className={`account-arrow ${showGameDropdown ? 'open' : ''}`}>⌄</span>
+                  <span className={`account-arrow ${showGameDropdown ? 'open' : ''}`}><ChevronDown size={14} /></span>
                 </div>
                 <div className="account-balance">
                   <span className="account-icon">{selectedGameCurrency.icon}</span>
@@ -227,7 +233,7 @@ const {
               <span className="bonus-arrow">›</span>
             </div>
             
-            <button className="wallet-btn" onClick={handleWalletClick}>Wallet</button>
+            <button className="wallet-btn" onClick={() => {}}>Wallet</button>
           </div>
         </div>
       )}

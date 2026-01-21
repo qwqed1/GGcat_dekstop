@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import './Top20Page.css'
-import Header from './Header'
+import PageLayout from './PageLayout'
 import Navigation from './Navigation'
 import { useCurrency } from '../context/CurrencyContext'
 import { useLanguage } from '../context/LanguageContext'
@@ -59,9 +59,7 @@ function Top20Page() {
 
 
   return (
-    <div className="app top20-page">
-      <Header />
-
+    <PageLayout activePage="top20" className="top20-page">
       <main className="main-content top20-content">
         <div className="top20-card">
           <div className="top20-title">{t('top20.title')}</div>
@@ -114,7 +112,7 @@ function Top20Page() {
       </main>
 
       <Navigation />
-    </div>
+    </PageLayout>
   )
 }
 
