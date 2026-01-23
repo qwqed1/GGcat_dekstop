@@ -14,7 +14,7 @@ import { useUser } from '../context/UserContext'
 import { maskUsername } from '../utils/maskUsername'
 import { vibrate, VIBRATION_PATTERNS } from '../utils/vibration'
 import { useCurrency } from '../context/CurrencyContext'
-
+import GameFaq from './GameFaq'
 
 const MemoHeader = memo(Header)
 const MemoNavigation = memo(Navigation)

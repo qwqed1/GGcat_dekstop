@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useCallback } from 'react'
 import { getCases } from '../api/cases'
+import { API_URL } from '../api/client'
 
 const AppDataContext = createContext(null)
 
@@ -41,7 +42,7 @@ export function AppDataProvider({ children }) {
       const timeoutId = setTimeout(() => controller.abort(), 10000) // 10s
 
       try {
-        const ratesResponse = await fetch(import.meta.env.VITE_API_URL + '/rates', {
+        const ratesResponse = await fetch(API_URL + '/rates', {
           signal: controller.signal
         })
         clearTimeout(timeoutId)

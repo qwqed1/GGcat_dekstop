@@ -14,6 +14,7 @@ import { getUserById } from '../api/users'
 import { useUser } from '../context/UserContext'
 import { vibrate, VIBRATION_PATTERNS } from '../utils/vibration'
 import { useFreeSpin } from '../context/FreeSpinContext'
+import GameFaq from './GameFaq'
 
 const NUM_LIGHTS = 32 // Number of lights around the wheel
 
@@ -526,6 +527,9 @@ function WheelPage() {
             </div>
           </div>
         </div>
+
+        {/* FAQ Section */}
+        <GameFaq game="wheel" />
 
         {/* Fortune Wheel Section */}
         <div className="wheel-section">

@@ -4,7 +4,7 @@ import { useLanguage } from '../context/LanguageContext'
 import { useUser } from '../context/UserContext'
 import * as usersApi from '../api/users'
 import { useTonConnectUI, useTonWallet } from '@tonconnect/ui-react'
-import { apiFetch } from '../api/client'
+import { apiFetch, API_URL } from '../api/client'
 
 
 
@@ -21,8 +21,6 @@ function DepositModal({ isOpen, onClose }) {
   const dragStartY = useRef(0)
   const currentTranslateY = useRef(0)
   const isDragging = useRef(false)
-
-  const API_URL = import.meta.env.VITE_API_URL
 
   const { user, loading, setUser } = useUser()
   
@@ -44,7 +42,7 @@ const handleTonPay = async () => {
 
   try {
     // 1️⃣ create (учёт)
-    await apiFetch('/api/ton/create', {
+    await apiFetch('/ton/create', {
       method: 'POST',
       body: JSON.stringify({
         user_id: user.id,
@@ -64,7 +62,7 @@ const handleTonPay = async () => {
     })
 
     // 3️⃣ success — ТОЛЬКО user_id
-    await apiFetch('/api/ton/success', {
+    await apiFetch('/ton/success', {
       method: 'POST',
       body: JSON.stringify({
         user_id: user.id
@@ -105,7 +103,7 @@ if (loading || !user) {
     if (!amount || Number(amount) <= 0) return
   
     try {
-      const res = await fetch(`${API_URL}/api/stars/create`, {
+      const res = await fetch(`${API_URL}/stars/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -134,7 +132,7 @@ if (loading || !user) {
       if (event.status === 'paid') {
         try {
           // 1️⃣ подтверждаем депозит
-          await fetch(`${API_URL}/api/stars/success`, {
+          await fetch(`${API_URL}/stars/success`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

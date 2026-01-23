@@ -9,12 +9,14 @@ import {
   Copy, 
   ChevronRight, 
   Crown,
-  Wallet 
+  Wallet,
+  UserPlus
 } from 'lucide-react'
 import PageLayout from './PageLayout'
 import Navigation from './Navigation'
 import WithdrawModal from './WithdrawModal'
 import InventoryModal from './InventoryModal'
+import AuthModal from './AuthModal'
 import { useCurrency } from '../context/CurrencyContext'
 import { useUser } from '../context/UserContext'
 import { useLanguage } from '../context/LanguageContext'
@@ -45,8 +47,9 @@ function ProfilePage() {
     }
   }, [location.hash])
   
-  const { user, settings, updateSettings, loading } = useUser()
+  const { user, settings, updateSettings, loading, isGuest, logout } = useUser()
   const { t, language, changeLanguage, languages, currentLanguage } = useLanguage()
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
 
   const level = user?.level || 1
   const xp = user?.xp || 0
@@ -68,14 +71,157 @@ function ProfilePage() {
 
   if (loading) return <div className="profile-page"><div className="profile-loading">Loading...</div></div>
   
-  if (!user) return (
-    <div className="profile-page">
-      <div className="profile-error">
-        <p>Failed to load profile</p>
-        <button onClick={() => window.location.reload()}>Retry</button>
-      </div>
-    </div>
-  )
+  // Гостевой режим - показываем профиль с призывом к регистрации
+  if (isGuest || !user) {
+    return (
+      <PageLayout activePage="profile" className="profile-page">
+        <div className="profile-content">
+          {/* Guest Header Card */}
+          <div className="profile-header-card guest-card">
+            <div className="profile-main-info">
+              <div className="profile-avatar-wrapper">
+                <img 
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=guest" 
+                  alt="guest avatar" 
+                  className="profile-avatar" 
+                />
+                <div className="profile-level-badge">?</div>
+              </div>
+              
+              <div className="profile-text-info">
+                <h2 className="profile-name">{t('common.guest') || 'Guest'}</h2>
+                <p className="guest-hint">{t('auth.guestHint') || 'Register to save your progress'}</p>
+              </div>
+
+              <div className="profile-actions">
+                <div 
+                  className="profile-action-btn language-btn"
+                  onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
+                >
+                  <img src={currentLanguage.flag} alt={currentLanguage.name} className="lang-flag" />
+                  {showLanguageDropdown && (
+                    <div className="language-dropdown">
+                      {languages.map((lang) => (
+                        <div
+                          key={lang.id}
+                          className={`language-option ${language === lang.id ? 'active' : ''}`}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            changeLanguage(lang.id)
+                            setShowLanguageDropdown(false)
+                          }}
+                        >
+                          <img src={lang.flag} alt={lang.name} className="language-flag" />
+                          <span>{lang.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Register CTA */}
+            <div className="guest-cta-section">
+              <button 
+                className="guest-register-btn"
+                onClick={() => setIsAuthModalOpen(true)}
+              >
+                <UserPlus size={20} />
+                <span>{t('auth.registerButton') || 'Create Account'}</span>
+              </button>
+              <p className="guest-benefits">
+                {t('auth.benefits') || 'Save progress, withdraw gifts, join competitions'}
+              </p>
+            </div>
+          </div>
+
+          {/* Promo Blocks - fluid style like main profile */}
+          <div className="promo-section">
+            {/* Telegram Promo */}
+            <div className="promo-block telegram-promo" onClick={() => window.open('https://t.me/ggcat_gift', '_blank')}>
+              <div className="promo-decor-layer">
+                <div className="promo-blob-1"></div>
+                <div className="promo-blob-2"></div>
+                <div className="promo-stripes"></div>
+              </div>
+              
+              <div className="promo-content-left">
+                <div className="promo-icon-box">
+                  <Gift size={24} color="#fff" />
+                </div>
+                <div className="promo-text-group">
+                  <h3 className="promo-title">{t('profile.dailyPromo')}</h3>
+                  <p className="promo-description">
+                    {t('profile.dailyPromoDesc')}
+                  </p>
+                </div>
+              </div>
+              <div className="promo-action-icon">
+                <ChevronRight size={20} />
+              </div>
+            </div>
+
+            {/* Partner Program */}
+            <div className="promo-block partner-promo" onClick={() => navigate('/partner')}>
+              <div className="promo-decor-layer">
+                <div className="promo-blob-1"></div>
+                <div className="promo-blob-2"></div>
+                <div className="promo-stripes"></div>
+              </div>
+
+              <div className="promo-content-left">
+                <div className="promo-icon-box">
+                  <Users size={24} color="#fff" />
+                </div>
+                <div className="promo-text-group">
+                  <h3 className="promo-title">{t('profile.partnerTitle')}</h3>
+                  <p className="promo-description">
+                    {t('profile.partnerDesc')}
+                  </p>
+                </div>
+              </div>
+              <div className="promo-action-icon">
+                <ChevronRight size={20} />
+              </div>
+            </div>
+          </div>
+
+          {/* Settings for guests */}
+          <div className="settings-section-new">
+            <h3>{t('profile.settings')}</h3>
+            <div className="settings-list-new">
+              <div className="setting-row">
+                <div className="setting-info">
+                  <span className="setting-name">{t('profile.vibration')}</span>
+                </div>
+                <label className="switch">
+                  <input 
+                    type="checkbox" 
+                    checked={settings?.vibrationEnabled}
+                    onChange={(e) => updateSettings({ vibrationEnabled: e.target.checked })}
+                  />
+                  <span className="slider round"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <AuthModal
+          isOpen={isAuthModalOpen}
+          onClose={() => setIsAuthModalOpen(false)}
+        />
+
+        {notification.visible && (
+          <div className="notification">
+            {notification.message}
+          </div>
+        )}
+      </PageLayout>
+    )
+  }
 
   const {
     id,
@@ -377,6 +523,11 @@ function ProfilePage() {
         onClose={() => setIsInventoryModalOpen(false)}
         items={inventoryDrops}
         loading={loadingInventory}
+      />
+
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
       />
 
       {notification.visible && (

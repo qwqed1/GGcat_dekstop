@@ -18,9 +18,12 @@
   transition: margin-left 0.3s ease;
 }
 
-.page-main.sidebar-collapsed {
-  /* Adjust if needed */
+.page-main > * {
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 
 /* Mobile adjustments */
 @media (max-width: 768px) {

@@ -1,4 +1,5 @@
-const API_URL = import.meta.env.VITE_API_URL || 'https://ggcat.org'
+const RAW_API_URL = import.meta.env.VITE_API_URL || 'https://ggcat.org'
+export const API_URL = RAW_API_URL.endsWith('/api') ? RAW_API_URL : `${RAW_API_URL}/api`
 
 if (!import.meta.env.VITE_API_URL) {
   console.warn('⚠️ VITE_API_URL not set, using default:', API_URL)

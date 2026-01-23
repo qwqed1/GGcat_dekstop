@@ -10,6 +10,7 @@ import { useCurrency } from '../context/CurrencyContext'
 import { useLanguage } from '../context/LanguageContext'
 import { usePvpSocket } from "../hooks/usePvpSocket"
 import { getUserById } from '../api/users'
+import GameFaq from './GameFaq'
 const MemoHeader = memo(Header)
 const MemoNavigation = memo(Navigation)
 const MemoBetModal = memo(BetModal)
@@ -565,6 +566,9 @@ function PvPPage() {
     }
   }}
 />
+
+        {/* FAQ Section */}
+        <GameFaq game="pvp" />
 
         {/* Выбор атаки и защиты */}
         {gameState === 'waiting' && !isWaitingForOpponent && (

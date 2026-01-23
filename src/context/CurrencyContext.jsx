@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { useUser } from './UserContext'
+import { API_URL } from '../api/client'
 
 const CurrencyContext = createContext(null)
 
@@ -40,7 +41,7 @@ export function CurrencyProvider({ children }) {
 
   /* ===== LOAD RATES FROM BACKEND ===== */
   useEffect(() => {
-    fetch(import.meta.env.VITE_API_URL + '/rates')
+    fetch(API_URL + '/rates')
       .then((res) => res.json())
       .then(setRates)
       .catch(() => setRates({}))

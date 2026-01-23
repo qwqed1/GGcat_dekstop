@@ -23,6 +23,13 @@ export const createUser = (data) =>
     body: JSON.stringify(data),
   })
 
+// авторизация пользователя (логин)
+export const loginUser = (data) =>
+  apiFetch('/users/login', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  })
+
 /* ===== PATCH ===== */
 
 // частичное обновление пользователя

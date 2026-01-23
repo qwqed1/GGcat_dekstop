@@ -36,8 +36,14 @@ function HomePage() {
   return (
     <PageLayout activePage="home">
       <div className="home-content">
-        <Banner />
-        <TaskList />
+        <div className="home-top-row">
+          <div className="home-banner-wrapper">
+            <Banner />
+          </div>
+          <div className="home-promo-wrapper">
+            <TaskList />
+          </div>
+        </div>
 
         <h2>{t('home.games')}</h2>
         <div className="games-section">
@@ -96,32 +102,7 @@ function AppContent() {
 
 
 function App() {
-  const { initUser, loading } = useUser()
-
-  // Инициализация пользователя - сразу для сайта, без ожидания Telegram
-  useEffect(() => {
-    // Проверяем есть ли Telegram WebApp
-    const tg = window.Telegram?.WebApp
-    
-    if (tg?.initDataUnsafe?.user) {
-      // Если есть Telegram - используем его данные
-      const tgUser = tg.initDataUnsafe.user
-      initUser({
-        tg_id: String(tgUser.id),
-        username: tgUser.username || `tg_${tgUser.id}`,
-        firstname: tgUser.first_name || 'Guest',
-        photo_url: tgUser.photo_url || null,
-      })
-    } else {
-      // Для сайта - демо пользователь
-      initUser({
-        tg_id: 'demo_user',
-        username: 'demo',
-        firstname: 'Demo User',
-        photo_url: null,
-      })
-    }
-  }, [initUser])
+  const { loading } = useUser()
 
   // пока идёт инициализация пользователя
   if (loading) {

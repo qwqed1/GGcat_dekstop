@@ -4,6 +4,7 @@ import './WheelPage.css'
 import PageLayout from './PageLayout'
 import Header from './Header'
 import Navigation from './Navigation'
+import GameFaq from './GameFaq'
 import { useUser } from '../context/UserContext'
 import { useCurrency } from '../context/CurrencyContext'
 import { useLanguage } from '../context/LanguageContext'
@@ -532,6 +533,9 @@ function UpgradePage() {
             </div>
           )}
         </div>
+
+        {/* FAQ Section */}
+        <GameFaq game="upgrade" />
 
         {/* Выбор предметов - Ваши предметы */}
         <div className="upgrade-selection-section">

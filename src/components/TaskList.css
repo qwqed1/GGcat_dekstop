@@ -2,7 +2,13 @@
   background-color: var(--dark-bg);
   border-radius: 16px;
   padding: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 0;
+  height: 230px;
+  max-height: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
 }
 
 .task-item {
